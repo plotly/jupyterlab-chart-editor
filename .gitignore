@@ -1,0 +1,4 @@
+*.bundle.*
+lib/
+node_modules/
+.ipynb_checkpoints
