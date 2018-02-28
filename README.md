@@ -1,10 +1,12 @@
 # jupyterlab-chart-editor
 
+[![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/plotly/jupyterlab-chart-editor/master?urlpath=lab/tree/notebooks)
+
 A JupyterLab extension for creating and editing Plotly charts
 
 ## Prerequisites
 
-* JupyterLab >= 0.32.0
+* JupyterLab >= 0.31.0
 * plotly.py >= 2.0.0
 
 <!-- ## Usage

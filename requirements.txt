@@ -1,0 +1,6 @@
+jupyterlab>=0.31.0
+traitlets>=4.3.1
+ipython
+pandas
+numpy
+plotly
