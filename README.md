@@ -4,53 +4,54 @@
 
 A JupyterLab extension for creating and editing Plotly charts
 
+![](https://user-images.githubusercontent.com/512354/36922011-47929a40-1e1b-11e8-812a-e10a96fdd39f.gif)
+
 ## Prerequisites
 
 * JupyterLab >= 0.31.0
 * plotly.py >= 2.0.0
 
-<!-- ## Usage
+## Usage
 
-To render Plotly JSON in IPython:
+To create a chart from a dict:
 
 ```python
 from IPython.display import display
 
-def Plotly(data=[], layout={}):
+def PlotlyEditor(data=[]):
     bundle = {}
-    bundle['application/vnd.plotly.v1+json'] = {
-        'data': data,
-        'layout': layout,
-    }
+    bundle['application/vnd.plotly-editor.v1+json'] = data
     display(bundle, raw=True)
 
-data = [
-    {'x': [1999, 2000, 2001, 2002], 'y': [10, 15, 13, 17], 'type': 'scatter'},
-    {'x': [1999, 2000, 2001, 2002], 'y': [16, 5, 11, 9], 'type': 'scatter'}
-]
-
-layout = {
-    'title': 'Sales Growth',
-    'xaxis': {'title': 'Year', 'showgrid': False, 'zeroline': False},
-    'yaxis': {'title': 'Percent', 'showline': False}
+data = {
+    'col1': [1, 2, 3],
+    'col2': [4, 3, 2],
+    'col3': [17, 13, 9],
 }
 
-Plotly(data, layout)
+PlotlyEditor(data)
 ```
 
-To render using the [plotly Python library](https://github.com/plotly/plotly.py):
+To create a chart from a pandas DataFrame:
 
 ```python
-from plotly.offline import iplot
-    
-trace = plotly.graph_objs.Heatmap(z=[[1, 20, 30],
-                      [20, 1, 60],
-                      [30, 60, 1]])
-fig = dict(data=[trace])
-iplot(fig)
+import pandas as pd
+from IPython.display import display
+
+def PlotlyEditor(data=[], dataframe=None):
+    bundle = {}
+    if dataframe is not None:
+        bundle['application/vnd.plotly-editor.v1+json'] = dataframe.head().to_dict()
+    else:
+        bundle['application/vnd.plotly-editor.v1+json'] = data
+    display(bundle, raw=True)
+
+cars = pd.read_json('https://raw.githubusercontent.com/vega/vega/master/docs/data/cars.json')
+
+PlotlyEditor(dataframe=cars)
 ```
 
-To render a `.plotly` or `.plotly.json` file, simply open it: -->
+<!-- To render a `.plotly` or `.plotly.json` file, simply open it: -->
 
 ## Install
 
