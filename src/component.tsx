@@ -61,8 +61,8 @@ export default class Editor extends React.Component<IProps, IState> {
 	render() {
 		const { data, plotly } = this.props;
 		const dataSourceOptions = Object.keys(data).map(name => ({
-		  value: name,
-		  label: name,
+			value: name,
+			label: name,
 		}));
 		return (
 			<div className="container">

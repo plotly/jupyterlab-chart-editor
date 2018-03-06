@@ -77,13 +77,6 @@ export class RenderedPlotlyEditor extends Widget implements IRenderMime.IRendere
 		});
 	}
 
-	/**
-	 * A message handler invoked on a `'resize'` message.
-	 */
-	protected onResize(msg: Widget.ResizeMessage): void {
-		this.update();
-	}
-
 	private _mimeType: string;
 }
 
@@ -104,7 +97,7 @@ const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
 		dataType: 'json',
 		fileTypes: [
 			{
-				name: 'plotly',
+				name: 'plotlyEditor',
 				mimeTypes: [MIME_TYPE],
 				extensions: ['.plotly', '.plotly.json'],
 				iconClass: CSS_ICON_CLASS
@@ -112,8 +105,8 @@ const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
 		],
 		documentWidgetFactoryOptions: {
 			name: 'Plotly Editor',
-			primaryFileType: 'plotly',
-			fileTypes: ['csv', 'json', 'plotly']
+			primaryFileType: 'plotlyEditor',
+			fileTypes: ['json', 'plotly']
 		}
 	}
 ];
