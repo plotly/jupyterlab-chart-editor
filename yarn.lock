@@ -2567,15 +2567,9 @@ planar-graph-to-polyline@^1.0.0:
     two-product "^1.0.0"
     uniq "^1.0.0"
 
-"plotly-icons@github:gnestor/plotly-icons#package.json":
-  version "1.1.4"
-  resolved "https://codeload.github.com/gnestor/plotly-icons/tar.gz/08d13e800635c9db068c5b82ff6d0cc86abb5bce"
-  dependencies:
-    mdi-react "^2.1.19"
-
-plotly-icons@gnestor/plotly-icons#package.json:
-  version "1.1.4"
-  resolved "https://codeload.github.com/gnestor/plotly-icons/tar.gz/b98e1d0dcfe3ae61d42081da68c06cafff022598"
+plotly-icons@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/plotly-icons/-/plotly-icons-1.1.5.tgz#95dc0f19082a35a7dd7b92f2fa4be7c9af48c62d"
   dependencies:
     mdi-react "^2.1.19"
 
@@ -2799,6 +2793,29 @@ rc-util@^4.0.4, rc-util@^4.4.0:
     prop-types "^15.5.10"
     shallowequal "^0.2.2"
 
+react-chart-editor@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-chart-editor/-/react-chart-editor-0.11.0.tgz#04439d47b7f75087c964e6d3f1180094a391379b"
+  dependencies:
+    classnames "^2.2.5"
+    draft-js "^0.10.4"
+    draft-js-export-html "github:plotly/draft-js-export-html"
+    draft-js-import-html "^1.2.1"
+    draft-js-utils "^1.2.0"
+    fast-isnumeric "^1.1.1"
+    immutability-helper "^2.6.4"
+    plotly-icons "^1.1.5"
+    plotly.js "^1.33.0"
+    prop-types "^15.5.10"
+    raf "^3.4.0"
+    react-color "^2.13.8"
+    react-colorscales "^0.4.2"
+    react-plotly.js "^1.6.0"
+    react-rangeslider "^2.2.0"
+    react-select "^1.0.0-rc.10"
+    react-tabs "^2.2.1"
+    tinycolor2 "^1.4.1"
+
 react-color@^2.13.8:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.14.0.tgz#5828a11c034aa0939befbd888a066ee37d8c3cc2"
@@ -2832,29 +2849,7 @@ react-input-autosize@^2.1.2:
   dependencies:
     prop-types "^15.5.8"
 
-react-plotly.js-editor@gnestor/react-plotly.js-editor#package.json:
-  version "0.9.2"
-  resolved "https://codeload.github.com/gnestor/react-plotly.js-editor/tar.gz/d193d3fc84dc7369277a0e9b03335ec9a35f1e31"
-  dependencies:
-    classnames "^2.2.5"
-    draft-js "^0.10.4"
-    draft-js-export-html "github:plotly/draft-js-export-html"
-    draft-js-import-html "^1.2.1"
-    draft-js-utils "^1.2.0"
-    fast-isnumeric "^1.1.1"
-    immutability-helper "^2.6.4"
-    plotly-icons "github:gnestor/plotly-icons#package.json"
-    plotly.js "^1.33.0"
-    prop-types "^15.5.10"
-    raf "^3.4.0"
-    react-color "^2.13.8"
-    react-colorscales "^0.4.2"
-    react-rangeslider "^2.2.0"
-    react-select "^1.0.0-rc.10"
-    react-tabs "^2.2.1"
-    tinycolor2 "^1.4.1"
-
-react-plotly.js@^1.2.0:
+react-plotly.js@^1.2.0, react-plotly.js@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/react-plotly.js/-/react-plotly.js-1.6.0.tgz#cf92a46b02f33bb93601ac0125a10c9b15b9a89f"
   dependencies:

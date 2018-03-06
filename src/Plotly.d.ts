@@ -404,7 +404,7 @@ declare module 'react-plotly.js/factory' {
 	
 }
 
-declare module 'react-plotly.js-editor' {
+declare module 'react-chart-editor' {
 	
 	import * as React from 'react';
 	

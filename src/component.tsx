@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import PlotlyEditor from 'react-plotly.js-editor';
+import PlotlyEditor from 'react-chart-editor';
 
 import createPlotComponent = require('react-plotly.js/factory');
 
-import 'react-plotly.js-editor/lib/react-plotly.js-editor.css';
+import 'react-chart-editor/lib/react-chart-editor.css';
 
 let Plot: any;
 

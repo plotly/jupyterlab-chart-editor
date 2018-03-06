@@ -11,8 +11,6 @@ import * as ReactDOM from 'react-dom';
 
 import Editor from './component';
 
-import 'react-plotly.js-editor/lib/react-plotly.js-editor.css';
-
 import '../style/index.css';
 
 namespace Private {
