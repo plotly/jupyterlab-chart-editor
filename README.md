@@ -4,7 +4,7 @@
 
 A JupyterLab extension for creating and editing Plotly charts
 
-![](https://user-images.githubusercontent.com/512354/36922011-47929a40-1e1b-11e8-812a-e10a96fdd39f.gif)
+![](https://user-images.githubusercontent.com/512354/37057677-0055595e-213d-11e8-9f16-b456a9c61388.gif)
 
 ## Prerequisites
 
@@ -38,25 +38,25 @@ To create a chart from a pandas DataFrame:
 import pandas as pd
 from IPython.display import display
 
-def PlotlyEditor(data=[], dataframe=None):
+def PlotlyEditor(data=[]):
     bundle = {}
-    if dataframe is not None:
-        bundle['application/vnd.plotly-editor.v1+json'] = dataframe.head().to_dict()
+    if isinstance(data, pd.DataFrame):
+        bundle['application/vnd.plotly-editor.v1+json'] = data.to_dict(orient="list")
     else:
         bundle['application/vnd.plotly-editor.v1+json'] = data
     display(bundle, raw=True)
 
 cars = pd.read_json('https://raw.githubusercontent.com/vega/vega/master/docs/data/cars.json')
 
-PlotlyEditor(dataframe=cars)
+PlotlyEditor(cars)
 ```
 
-<!-- To render a `.plotly` or `.plotly.json` file, simply open it: -->
+To render a `.plotly` or `.plotly.json` file, simply open it:
 
 ## Install
 
 ```bash
-jupyter labextension install github:plotly/jupyterlab-chart-editor
+jupyter labextension install jupyterlab-chart-editor
 ```
 
 ## Development
