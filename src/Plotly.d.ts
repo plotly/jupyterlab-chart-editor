@@ -420,3 +420,41 @@ declare module 'react-chart-editor' {
 	export default class PlotlyEditor extends React.Component<any, any> {}
 	
 }
+
+declare module 'pandas-js' {
+
+	import { JSONValue } from '@phosphor/coreutils';
+	
+	export class DataFrame {
+		constructor(data: JSONValue);
+		to_json: (orient?: 'records' | 'index' | 'split' | 'values') => JSONValue;
+	}
+	
+}
+
+declare module 'tableschema' {
+
+	import { JSONValue } from '@phosphor/coreutils';
+
+	interface Table {
+		load: (data: string) => JSONValue;
+	}
+
+}
+
+declare module 'datalib' {
+
+	import { JSONArray, JSONObject, JSONValue } from '@phosphor/coreutils';
+
+	export type Primitive = 'boolean' | 'integer' | 'number' | 'date' | 'string';
+
+	export interface Format {
+		type: 'json' | 'csv' | 'tsv' | 'dsv' | 'topojson' | 'treejson';
+		delimiter?: string;
+		property?: string;
+		parse?: 'auto' | { [key: string]: Primitive };
+	}
+
+	export function read(data: string | Buffer, format?: Format): string | JSONObject[];
+
+}

@@ -9,6 +9,12 @@ import * as React from 'react';
 
 import * as ReactDOM from 'react-dom';
 
+import * as Plotly from 'plotly.js';
+
+import * as dl from 'datalib';
+
+import { JSONArray, JSONObject, JSONValue } from '@phosphor/coreutils';
+
 import Editor from './component';
 
 import '../style/index.css';
@@ -69,9 +75,23 @@ export class RenderedPlotlyEditor extends Widget implements IRenderMime.IRendere
 	 * Render Plotly into this widget's node.
 	 */
 	renderModel(model: IRenderMime.IMimeModel): Promise<void> {
-		const data = model.data[this._mimeType] as any;
+		const data = model.data[this._mimeType] as string;
+		let json: JSONValue;
+		try {
+			json = JSON.parse(data);
+		} catch(error) {
+			const lines = data.split('\n');
+			const delimiter = lines[0].match(/.+(\t|,)/)[1];
+			const rows = dl.read(data, { type: 'dsv', delimiter, parse: 'auto' }) as JSONObject[];
+			json = rows.reduce((result: { [key: string]: JSONArray; }, row) => {
+				Object.entries(row).forEach(([key, value]) => {
+					result[key] = (result[key] || []).concat(value);
+				});
+				return result;
+			}, {});
+		}
 		return new Promise<void>((resolve, reject) => {
-			ReactDOM.render(<Editor data={data} plotly={Plotly} width={this.node.offsetWidth} height={this.node.offsetHeight} />, this.node, () => {
+			ReactDOM.render(<Editor data={json} plotly={Plotly} width={this.node.offsetWidth} height={this.node.offsetHeight} />, this.node, () => {
 				resolve(undefined);
 			});
 		});
@@ -94,19 +114,29 @@ const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
 		id: 'jupyterlab-chart-editor:factory',
 		rendererFactory,
 		rank: 0,
-		dataType: 'json',
+		dataType: 'string',
 		fileTypes: [
 			{
 				name: 'plotlyEditor',
 				mimeTypes: [MIME_TYPE],
 				extensions: ['.plotly', '.plotly.json'],
 				iconClass: CSS_ICON_CLASS
+			},
+			{
+				name: 'tsv',
+				mimeTypes: ['text/csv'],
+				extensions: ['.tsv']
+			},
+			{
+				name: 'txt',
+				mimeTypes: ['text/plain'],
+				extensions: ['.txt']
 			}
 		],
 		documentWidgetFactoryOptions: {
 			name: 'Plotly Editor',
 			primaryFileType: 'plotlyEditor',
-			fileTypes: ['json', 'plotly']
+			fileTypes: ['json', 'plotlyEditor', 'csv', 'tsv', 'txt']
 		}
 	}
 ];
