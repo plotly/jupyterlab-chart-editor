@@ -19,29 +19,6 @@ import Editor from './component';
 
 import '../style/index.css';
 
-namespace Private {
-  
-  declare function require(moduleName: string): string;
-  
-  /**
-   * Is plotly.js being loaded?.
-   */
-  export
-  let loadingPlotly = false;
-  
-  /**
-   * Load plotly.js browser script.
-   */
-  export
-  function loadPlotly(): void {
-    loadingPlotly = true;
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.text = require('raw-loader!plotly.js/dist/plotly.min.js');
-    document.head.appendChild(script);
-  }
-  
-}
 
 /**
  * The CSS class to add to the Plotly Widget.
@@ -75,22 +52,31 @@ export class RenderedPlotlyEditor extends Widget implements IRenderMime.IRendere
 	 * Render Plotly into this widget's node.
 	 */
 	renderModel(model: IRenderMime.IMimeModel): Promise<void> {
-		const data = model.data[this._mimeType] as string;
-		let json: JSONValue;
-		try {
-			json = JSON.parse(data);
-		} catch(error) {
-			const lines = data.split('\n');
-			const delimiter = lines[0].match(/.+(\t|,)/)[1];
-			const rows = dl.read(data, { type: 'dsv', delimiter, parse: 'auto' }) as JSONObject[];
-			json = rows.reduce((result: { [key: string]: JSONArray; }, row) => {
-				Object.entries(row).forEach(([key, value]) => {
-					result[key] = (result[key] || []).concat(value);
-				});
-				return result;
-			}, {});
-		}
 		return new Promise<void>((resolve, reject) => {
+			const data = model.data[this._mimeType] as string;
+			if (!data) {
+				reject(undefined);
+			}
+			let json: JSONValue;
+			if (typeof data === 'string') {
+				// If data is from document, parse JSON
+				try {
+					json = JSON.parse(data);
+				} catch(error) {
+					const lines = data.split('\n');
+					const delimiter = lines[0].match(/.+(\t|,)/)[1];
+					const rows = dl.read(data, { type: 'dsv', delimiter, parse: 'auto' }) as JSONObject[];
+					json = rows.reduce((result: { [key: string]: JSONArray; }, row) => {
+						Object.entries(row).forEach(([key, value]) => {
+							result[key] = (result[key] || []).concat(value);
+						});
+						return result;
+					}, {});
+				}
+			} else {
+				// If data is from notebook output
+				json = data;
+			}
 			ReactDOM.render(<Editor data={json} plotly={Plotly} width={this.node.offsetWidth} height={this.node.offsetHeight} />, this.node, () => {
 				resolve(undefined);
 			});
@@ -100,6 +86,7 @@ export class RenderedPlotlyEditor extends Widget implements IRenderMime.IRendere
 	private _mimeType: string;
 }
 
+
 /**
  * A mime renderer factory for Plotly data.
  */
@@ -108,6 +95,7 @@ export const rendererFactory: IRenderMime.IRendererFactory = {
 	mimeTypes: [MIME_TYPE],
 	createRenderer: options => new RenderedPlotlyEditor(options)
 };
+
 
 const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
 	{
@@ -140,5 +128,30 @@ const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
 		}
 	}
 ];
+
+
+namespace Private {
+  
+  declare function require(moduleName: string): string;
+  
+  /**
+   * Is plotly.js being loaded?.
+   */
+  export
+  let loadingPlotly = false;
+  
+  /**
+   * Load plotly.js browser script.
+   */
+  export
+  function loadPlotly(): void {
+    loadingPlotly = true;
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.text = require('raw-loader!plotly.js/dist/plotly.min.js');
+    document.head.appendChild(script);
+  }
+  
+}
 
 export default extensions;
