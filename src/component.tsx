@@ -22,6 +22,7 @@ export interface IProps {
  * The state of the JSON tree component.
  */
 export interface IState {
+  editing: boolean;
   graphDiv: {
     data?: Object[];
     layout?: Object;
@@ -38,6 +39,7 @@ export default class Editor extends React.Component<IProps, IState> {
     super(props);
     Plot = createPlotComponent(props.plotly);
     this.state = {
+      editing: true,
       graphDiv: {},
       editorRevision: 0,
       plotRevision: 0
@@ -57,6 +59,12 @@ export default class Editor extends React.Component<IProps, IState> {
     }));
   };
 
+  handleToggle = () => {
+    this.setState(({ editing }) => ({
+      editing: !editing
+    }));
+  };
+
   render() {
     const { data, plotly } = this.props;
     const dataSourceOptions = Object.keys(data).map(name => ({
@@ -66,6 +74,9 @@ export default class Editor extends React.Component<IProps, IState> {
     return (
       <div className="container">
         <PlotlyEditor
+          className={
+            this.state.editing ? 'plotly-editor toggled' : 'plotly-editor'
+          }
           config={{ editable: true }}
           graphDiv={this.state.graphDiv}
           onUpdate={this.handleEditorUpdate}
@@ -73,21 +84,22 @@ export default class Editor extends React.Component<IProps, IState> {
           dataSources={data}
           dataSourceOptions={dataSourceOptions}
           plotly={plotly}
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: this.state.editing ? 470 : 0 }}
         />
-        <div className="plot">
-          <Plot
-            debug
-            useResizeHandler
-            config={{ editable: true }}
-            data={this.state.graphDiv.data}
-            layout={this.state.graphDiv.layout}
-            onUpdate={this.handlePlotUpdate}
-            onInitialized={this.handlePlotUpdate}
-            revision={this.state.plotRevision}
-            style={{ width: '100%', height: '100%' }}
-          />
+        <div className="toggle" onClick={this.handleToggle}>
+          <div className={this.state.editing ? 'button toggled' : 'button'} />
         </div>
+        <Plot
+          className="plot"
+          config={{ editable: true }}
+          data={this.state.graphDiv.data}
+          debug
+          layout={this.state.graphDiv.layout}
+          onUpdate={this.handlePlotUpdate}
+          onInitialized={this.handlePlotUpdate}
+          revision={this.state.plotRevision}
+          useResizeHandler
+        />
       </div>
     );
   }
