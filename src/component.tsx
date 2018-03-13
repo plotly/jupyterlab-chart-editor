@@ -8,42 +8,50 @@ import 'react-chart-editor/lib/react-chart-editor.css';
 
 let Plot: any;
 
-/**
- * The properties for the JSON tree component.
- */
+export interface IGraphDiv {
+  data?: Object[];
+  layout?: Object;
+}
+
 export interface IProps {
   data: Object;
+  metadata?: IState;
+  handleUpdate?: (state: IState) => void;
   plotly: any;
   width?: number;
   height?: number;
 }
 
-/**
- * The state of the JSON tree component.
- */
 export interface IState {
-  editing: boolean;
-  graphDiv: {
-    data?: Object[];
-    layout?: Object;
-  };
+  editing?: boolean;
+  graphDiv: IGraphDiv;
   editorRevision: number;
   plotRevision: number;
 }
 
-/**
- * A component that renders JSON data as a collapsible tree.
- */
-export default class Editor extends React.Component<IProps, IState> {
+export default class ChartEditor extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     Plot = createPlotComponent(props.plotly);
-    this.state = {
+    const initialState = {
       editing: true,
-      graphDiv: {},
+      graphDiv: {
+        data: [],
+        layout: {}
+      },
       editorRevision: 0,
       plotRevision: 0
-    };
+    } as IState;
+    this.state = props.metadata ? props.metadata : initialState;
+  }
+
+  componentWillReceiveProps(nextProps: IProps) {
+    if (nextProps.metadata && nextProps.metadata !== this.props.metadata) {
+      const { graphDiv } = nextProps.metadata;
+      this.setState(() => {
+        graphDiv;
+      });
+    }
   }
 
   handlePlotUpdate = (graphDiv: any) => {
@@ -51,6 +59,11 @@ export default class Editor extends React.Component<IProps, IState> {
       editorRevision: x + 1,
       graphDiv
     }));
+    const { data, layout } = graphDiv;
+    this.props.handleUpdate({
+      ...this.state,
+      graphDiv: { data, layout }
+    });
   };
 
   handleEditorUpdate = () => {
@@ -103,12 +116,10 @@ export default class Editor extends React.Component<IProps, IState> {
           className="plot"
           config={{ editable: true }}
           data={this.state.graphDiv.data}
-          debug
           layout={this.state.graphDiv.layout}
           onUpdate={this.handlePlotUpdate}
           onInitialized={this.handlePlotUpdate}
           revision={this.state.plotRevision}
-          useResizeHandler
         />
       </div>
     );
