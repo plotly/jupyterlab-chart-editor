@@ -60,9 +60,20 @@ export default class Editor extends React.Component<IProps, IState> {
   };
 
   handleToggle = () => {
-    this.setState(({ editing }) => ({
-      editing: !editing
-    }));
+    this.setState(
+      ({ editing }) => ({
+        editing: !editing
+      }),
+      () => {
+        window.setTimeout(() => {
+          this.handleResize();
+        }, 500);
+      }
+    );
+  };
+
+  handleResize = () => {
+    this.props.plotly.Plots.resize(this.state.graphDiv);
   };
 
   render() {
@@ -84,7 +95,6 @@ export default class Editor extends React.Component<IProps, IState> {
           dataSources={data}
           dataSourceOptions={dataSourceOptions}
           plotly={plotly}
-          style={{ width: this.state.editing ? 470 : 0 }}
         />
         <div className="toggle" onClick={this.handleToggle}>
           <div className={this.state.editing ? 'button toggled' : 'button'} />
