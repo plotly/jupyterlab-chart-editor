@@ -80,7 +80,7 @@ export class RenderedPlotlyEditor extends Widget
         // If data is from notebook output
         json = data;
       }
-      ReactDOM.render(
+      this._ref = ReactDOM.render(
         <Editor
           data={json}
           plotly={Plotly}
@@ -91,11 +91,28 @@ export class RenderedPlotlyEditor extends Widget
         () => {
           resolve(undefined);
         }
-      );
+      ) as Editor;
     });
   }
 
+  /**
+   * A message handler invoked on a `'resize'` message.
+   */
+  protected onResize(msg: Widget.ResizeMessage): void {
+    this.update();
+  }
+
+  /**
+   * A message handler invoked on an `'update-request'` message.
+   */
+  protected onUpdateRequest(): void {
+    if (this.isVisible && this._ref) {
+      this._ref.handleResize();
+    }
+  }
+
   private _mimeType: string;
+  private _ref: Editor;
 }
 
 /**

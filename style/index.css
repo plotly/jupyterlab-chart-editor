@@ -22,12 +22,46 @@
   height: 100%;
 }
 
+.jp-RenderedPlotlyEditor .plotly-editor {
+  width: 0;
+  transition: width 0.5s;
+}
+
+.jp-RenderedPlotlyEditor .plotly-editor.toggled {
+  width: 470px;
+}
+
 .jp-RenderedPlotlyEditor .plot {
-  flex: 1;
-  width: 100%;
+  width: 0;
   height: 100%;
-  /* overflow: auto;
-  flex-grow: 1; */
+  flex: 1;
+}
+
+.jp-RenderedPlotlyEditor .toggle {
+  width: 20px;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.jp-RenderedPlotlyEditor .toggle .button {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  background-image: var(--jp-icon-edit);
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.jp-RenderedPlotlyEditor .toggle .button:hover {
+  opacity: 0.7;
+}
+
+.jp-RenderedPlotlyEditor .toggle .button.toggled {
+  background-image: var(--jp-icon-close);
 }
 
 /* Document styles */
