@@ -1,11 +1,3 @@
 #!/bin/bash
 
-# Clone the repo to your local environment
-git clone https://github.com/plotly/jupyterlab-chart-editor.git
-cd jupyterlab-chart-editor
-# Install dependencies
-npm install
-# Build Typescript source
-npm run build
-# Link your development version of the extension with JupyterLab
-jupyter labextension install .
+jupyter labextension install jupyterlab-chart-editor

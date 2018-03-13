@@ -11,6 +11,12 @@ A JupyterLab extension for creating and editing Plotly charts
 * JupyterLab >= 0.31.0
 * plotly.py >= 2.0.0
 
+## Install
+
+```bash
+jupyter labextension install jupyterlab-chart-editor
+```
+
 ## Usage
 
 To create a chart from a dict:
@@ -52,12 +58,6 @@ PlotlyEditor(cars)
 ```
 
 To render a `.plotly` or `.plotly.json` file, simply open it:
-
-## Install
-
-```bash
-jupyter labextension install jupyterlab-chart-editor
-```
 
 ## Development
 
