@@ -2,7 +2,7 @@
 
 [![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/plotly/jupyterlab-chart-editor/master?urlpath=lab/tree/notebooks)
 
-A JupyterLab extension for creating and editing Plotly charts
+A JupyterLab extension for creating and editing Plotly charts, based on https://github.com/plotly/react-chart-editor
 
 ![](https://user-images.githubusercontent.com/512354/37057677-0055595e-213d-11e8-9f16-b456a9c61388.gif)
 
