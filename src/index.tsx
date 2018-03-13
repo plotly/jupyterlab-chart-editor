@@ -13,32 +13,42 @@ import * as Plotly from 'plotly.js';
 
 import * as dl from 'datalib';
 
-import { JSONArray, JSONObject, JSONValue } from '@phosphor/coreutils';
+import {
+  ReadonlyJSONValue,
+  ReadonlyJSONArray,
+  ReadonlyJSONObject
+} from '@phosphor/coreutils';
 
-import Editor from './component';
+import ChartEditor, { IState } from './component';
 
 import '../style/index.css';
 
 /**
- * The CSS class to add to the Plotly Widget.
+ * The CSS class to add to the Plotly Editor Widget.
  */
 const CSS_CLASS = 'jp-RenderedPlotlyEditor';
 
 /**
- * The CSS class for a Plotly icon.
+ * The CSS class for a Plotly Editor icon.
  */
 const CSS_ICON_CLASS = 'jp-MaterialIcon jp-PlotlyIcon';
 
 /**
- * The MIME type for Plotly.
- * The version of this follows the major version of Plotly.
+ * The MIME type for Plotly Editor.
  */
 export const MIME_TYPE = 'application/vnd.plotly-editor.v1+json';
+
+/**
+ * Type interface for RenderedPlotlyEditor metadata.
+ */
+export interface IMetadata extends IState {
+  [key: string]: any;
+}
 
 export class RenderedPlotlyEditor extends Widget
   implements IRenderMime.IRenderer {
   /**
-   * Create a new widget for rendering Plotly.
+   * Create a new widget for rendering Plotly Editor.
    */
   constructor(options: IRenderMime.IRendererOptions) {
     super();
@@ -48,15 +58,16 @@ export class RenderedPlotlyEditor extends Widget
   }
 
   /**
-   * Render Plotly into this widget's node.
+   * Render Plotly Editor into this widget's node.
    */
   renderModel(model: IRenderMime.IMimeModel): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       const data = model.data[this._mimeType] as string;
+      const metadata = model.metadata[this._mimeType] as IMetadata;
       if (!data) {
         reject(undefined);
       }
-      let json: JSONValue;
+      let json: ReadonlyJSONValue;
       if (typeof data === 'string') {
         // If data is from document, parse JSON
         try {
@@ -68,22 +79,31 @@ export class RenderedPlotlyEditor extends Widget
             type: 'dsv',
             delimiter,
             parse: 'auto'
-          }) as JSONObject[];
-          json = rows.reduce((result: { [key: string]: JSONArray }, row) => {
-            Object.entries(row).forEach(([key, value]) => {
-              result[key] = (result[key] || []).concat(value);
-            });
-            return result;
-          }, {});
+          }) as ReadonlyJSONObject[];
+          json = rows.reduce(
+            (result: { [key: string]: ReadonlyJSONArray }, row) => {
+              Object.entries(row).forEach(([key, value]) => {
+                result[key] = (result[key] || []).concat(value);
+              });
+              return result;
+            },
+            {}
+          );
         }
       } else {
         // If data is from notebook output
         json = data;
       }
+      const handleUpdate = (state: IMetadata) => {
+        const metadata = { [this._mimeType]: state };
+        model.setData({ metadata });
+      };
       this._ref = ReactDOM.render(
-        <Editor
+        <ChartEditor
           data={json}
+          metadata={metadata}
           plotly={Plotly}
+          handleUpdate={handleUpdate}
           width={this.node.offsetWidth}
           height={this.node.offsetHeight}
         />,
@@ -91,7 +111,7 @@ export class RenderedPlotlyEditor extends Widget
         () => {
           resolve(undefined);
         }
-      ) as Editor;
+      ) as ChartEditor;
     });
   }
 
@@ -112,11 +132,11 @@ export class RenderedPlotlyEditor extends Widget
   }
 
   private _mimeType: string;
-  private _ref: Editor;
+  private _ref: ChartEditor;
 }
 
 /**
- * A mime renderer factory for Plotly data.
+ * A mime renderer factory for Plotly Editor.
  */
 export const rendererFactory: IRenderMime.IRendererFactory = {
   safe: true,

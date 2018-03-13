@@ -52,6 +52,7 @@
   top: 4px;
   left: 8px;
   background-image: var(--jp-icon-edit);
+  background-size: 18px;
   opacity: 0.4;
   cursor: pointer;
 }
@@ -72,6 +73,7 @@
 /* Output styles */
 .jp-OutputArea .jp-RenderedPlotlyEditor {
   min-height: 360px;
+  max-height: 540px;
 }
 
 /* Document icon */
