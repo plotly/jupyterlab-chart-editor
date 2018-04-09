@@ -15,8 +15,8 @@ export interface IGraphDiv {
 
 export interface IProps {
   data: Object;
-  metadata?: IState;
-  handleUpdate?: (state: IState) => void;
+  state?: IGraphDiv;
+  handleUpdate?: (state: IGraphDiv) => void;
   plotly: any;
   width?: number;
   height?: number;
@@ -33,25 +33,15 @@ export default class ChartEditor extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     Plot = createPlotComponent(props.plotly);
-    const initialState = {
+    this.state = {
       editing: true,
-      graphDiv: {
+      graphDiv: props.state || {
         data: [],
         layout: {}
       },
       editorRevision: 0,
       plotRevision: 0
     } as IState;
-    this.state = props.metadata ? props.metadata : initialState;
-  }
-
-  componentWillReceiveProps(nextProps: IProps) {
-    if (nextProps.metadata && nextProps.metadata !== this.props.metadata) {
-      const { graphDiv } = nextProps.metadata;
-      this.setState(() => {
-        graphDiv;
-      });
-    }
   }
 
   handlePlotUpdate = (graphDiv: any) => {
@@ -60,10 +50,7 @@ export default class ChartEditor extends React.Component<IProps, IState> {
       graphDiv
     }));
     const { data, layout } = graphDiv;
-    this.props.handleUpdate({
-      ...this.state,
-      graphDiv: { data, layout }
-    });
+    this.props.handleUpdate({ data, layout });
   };
 
   handleEditorUpdate = () => {
