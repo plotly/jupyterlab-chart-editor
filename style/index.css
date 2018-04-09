@@ -51,7 +51,7 @@
   position: absolute;
   top: 4px;
   left: 8px;
-  background-image: var(--jp-icon-edit);
+  background-image: var(--jp-icon-caretright);
   background-size: 18px;
   opacity: 0.4;
   cursor: pointer;
@@ -62,7 +62,7 @@
 }
 
 .jp-RenderedPlotlyEditor .toggle .button.toggled {
-  background-image: var(--jp-icon-close);
+  background-image: var(--jp-icon-caretleft);
 }
 
 /* Document styles */
