@@ -31,7 +31,11 @@ import {
 
 import { CodeCell } from '@jupyterlab/cells';
 
-import { ReadonlyJSONObject, PromiseDelegate } from '@phosphor/coreutils';
+import {
+  ReadonlyJSONObject,
+  PromiseDelegate,
+  JSONObject
+} from '@phosphor/coreutils';
 
 import { DSVModel } from '@jupyterlab/csvviewer';
 
@@ -74,14 +78,17 @@ export class PlotlyEditorPanel extends Widget
   implements DocumentRegistry.IReadyWidget {
   constructor(options: PlotlyEditorPanel.IOptions) {
     super();
+
     this.addClass(CSS_CLASS);
+
     this._context = options.context;
-    this.title.label = PathExt.basename(this._context.path);
+
     this._context.pathChanged.connect(this._onPathChanged, this);
     this._onPathChanged();
+
     this._context.ready.then(() => {
-      this._ready.resolve(undefined);
       this._render();
+      this._ready.resolve(undefined);
       this._monitor = new ActivityMonitor({
         signal: this._context.model.contentChanged,
         timeout: RENDER_TIMEOUT
@@ -102,10 +109,6 @@ export class PlotlyEditorPanel extends Widget
    */
   get ready(): Promise<void> {
     return this._ready.promise;
-  }
-
-  private _onPathChanged(): void {
-    this.title.label = PathExt.basename(this._context.localPath);
   }
 
   /**
@@ -131,16 +134,25 @@ export class PlotlyEditorPanel extends Widget
    * A message handler invoked on a `'resize'` message.
    */
   protected onResize(msg: Widget.ResizeMessage): void {
-    this.update();
-  }
-
-  /**
-   * A message handler invoked on an `'update-request'` message.
-   */
-  protected onUpdateRequest(): void {
-    if (this.isVisible && this._ref) {
+    if (this._ref) {
       this._ref.handleResize();
     }
+  }
+
+  // /**
+  //  * A message handler invoked on an `'update-request'` message.
+  //  */
+  // protected onUpdateRequest(): void {
+  //   if (this.isVisible) {
+  //     this._render();
+  //   }
+  // }
+
+  /**
+   * Handle a change in path.
+   */
+  private _onPathChanged(): void {
+    this.title.label = PathExt.basename(this._context.localPath);
   }
 
   /**
@@ -267,18 +279,18 @@ function activate(
             const context = docManager.contextForWidget(widget) as Context<
               DocumentRegistry.IModel
             >;
-
-            context.initialize(true).then(() => {
+            return context.initialize(true).then(() => {
               context.model.fromJSON(data);
-              context.save().then(() => {
-                if (open) {
-                  commands.execute('docmanager:open', {
-                    path: model.path,
-                    factory: FACTORY
-                  });
-                }
-              });
+              return context.save();
             });
+          })
+          .then(() => {
+            if (open) {
+              commands.execute('docmanager:open', {
+                path: model.path,
+                factory: FACTORY
+              });
+            }
           });
       });
   }
@@ -287,29 +299,25 @@ function activate(
     label: 'Open in Plotly Editor',
     caption: 'Open the datasource in Plotly Editor',
     execute: args => {
-      const cur = getCurrent(args);
-      if (cur) {
-        const cell = cur.notebook.activeCell;
+      const widget = getCurrent(args);
+      if (widget) {
+        const cell = widget.notebook.activeCell;
         if (cell.model.type === 'code') {
-          let codeCell = cur.notebook.activeCell as CodeCell;
-          let outputs = codeCell.model.outputs;
-          let i = 0;
-          while (i < outputs.length) {
+          const codeCell = widget.notebook.activeCell as CodeCell;
+          const outputs = codeCell.model.outputs;
+          for (let i = 0; i < outputs.length; i++) {
             if (outputs.get(i).data['application/vnd.dataresource+json']) {
               const { data } = outputs.get(i).data[
                 'application/vnd.dataresource+json'
-              ] as any;
-              console.log(data);
+              ] as JSONObject;
               const ll = app.shell.widgets('left');
               let fb = ll.next();
-              while ((fb as any).id != 'filebrowser') {
+              while (fb.id != 'filebrowser') {
                 fb = ll.next();
               }
               const path = (fb as any).model.path as string;
               createNew(path, data, true);
-              break;
             }
-            i++;
           }
         }
       }
@@ -320,12 +328,12 @@ function activate(
     label: 'Save Current Plotly Editor',
     caption: 'Save the chart datasource as plotly.json file',
     execute: args => {
-      let widget = app.shell.currentWidget;
+      const widget = app.shell.currentWidget;
       if (widget) {
-        const ref = (widget as PlotlyEditorPanel)._ref;
+        const { state } = (widget as PlotlyEditorPanel)._ref;
         const data = {
-          data: ref.state.data,
-          layout: ref.state.layout
+          data: state.data,
+          layout: state.layout
         };
         const context = docManager.contextForWidget(widget) as Context<
           DocumentRegistry.IModel
@@ -333,17 +341,17 @@ function activate(
         let isNew = !context.path.includes('.plotly.json');
         context.initialize(isNew).then(() => {
           context.model.fromJSON(data);
-          context.save();
+          if (isNew) {
+            context.saveAs();
+          } else {
+            context.save();
+          }
         });
       }
     },
     isEnabled: () => {
       const widget = app.shell.currentWidget;
-      if (widget && widget.hasClass(CSS_CLASS)) {
-        return true;
-      } else {
-        return false;
-      }
+      return widget && widget.hasClass(CSS_CLASS);
     }
   });
 
@@ -385,7 +393,7 @@ function activate(
     name: FACTORY,
     fileTypes: fileTypes,
     defaultFor: ['plotlyEditor'],
-    readOnly: true
+    readOnly: false
   });
 
   restorer.restore(tracker, {

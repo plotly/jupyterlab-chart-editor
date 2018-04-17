@@ -37,43 +37,9 @@
   flex: 1;
 }
 
-.jp-RenderedPlotlyEditor .toggle {
-  width: 20px;
-  height: 100%;
-  position: relative;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.jp-RenderedPlotlyEditor .toggle .button {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  top: 4px;
-  left: 8px;
-  background-image: var(--jp-icon-caretright);
-  background-size: 18px;
-  opacity: 0.4;
-  cursor: pointer;
-}
-
-.jp-RenderedPlotlyEditor .toggle .button:hover {
-  opacity: 0.7;
-}
-
-.jp-RenderedPlotlyEditor .toggle .button.toggled {
-  background-image: var(--jp-icon-caretleft);
-}
-
 /* Document styles */
 .jp-MimeDocument .jp-RenderedPlotlyEditor {
   overflow: hidden;
-}
-
-/* Output styles */
-.jp-OutputArea .jp-RenderedPlotlyEditor {
-  min-height: 360px;
-  max-height: 540px;
 }
 
 /* Document icon */

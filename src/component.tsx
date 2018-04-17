@@ -129,7 +129,8 @@ export default class ChartEditor extends React.Component<
   };
 
   handleResize = () => {
-    this.props.plotly.Plots.resize(this.ref.state.graphDiv);
+    if (this.ref.state.graphDiv)
+      this.props.plotly.Plots.resize(this.ref.state.graphDiv);
   };
 
   render() {
