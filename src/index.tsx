@@ -115,6 +115,7 @@ export class PlotlyEditorPanel extends Widget
     if (this._monitor) {
       this._monitor.dispose();
     }
+    ReactDOM.unmountComponentAtNode(this.node);
     super.dispose();
   }
 
