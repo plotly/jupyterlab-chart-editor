@@ -114,7 +114,15 @@ export default class ChartEditor extends React.Component<
       }
       this.setState(() => ({
         dataSources,
-        data
+        data,
+        layout,
+        frames
+      }));
+    } else {
+      this.setState(() => ({
+        data,
+        layout,
+        frames
       }));
     }
     this.props.handleUpdate({ data, layout });
