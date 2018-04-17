@@ -266,7 +266,7 @@ function activate(
     return commands
       .execute('docmanager:new-untitled', {
         path: cwd,
-        ext: '.plotly.json',
+        ext: '.csv',
         type: 'file'
       })
       .then(model => {
@@ -280,7 +280,7 @@ function activate(
               DocumentRegistry.IModel
             >;
             return context.initialize(true).then(() => {
-              context.model.fromJSON(data);
+              context.model.fromString(data);
               return context.save();
             });
           })
@@ -306,10 +306,8 @@ function activate(
           const codeCell = widget.notebook.activeCell as CodeCell;
           const outputs = codeCell.model.outputs;
           for (let i = 0; i < outputs.length; i++) {
-            if (outputs.get(i).data['application/vnd.dataresource+json']) {
-              const { data } = outputs.get(i).data[
-                'application/vnd.dataresource+json'
-              ] as JSONObject;
+            if (outputs.get(i).data['text/csv']) {
+              const data = outputs.get(i).data['text/csv'] as JSONObject;
               const ll = app.shell.widgets('left');
               let fb = ll.next();
               while (fb.id != 'filebrowser') {
