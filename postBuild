@@ -1,3 +1,5 @@
 #!/bin/bash
 
-jupyter labextension install jupyterlab-chart-editor
+jlpm
+jlpm build
+jupyter labextension install . @jupyterlab/plotly-extension
