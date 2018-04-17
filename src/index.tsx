@@ -31,11 +31,9 @@ import {
 
 import { CodeCell } from '@jupyterlab/cells';
 
-import {
-  ReadonlyJSONObject,
-  PromiseDelegate,
-  JSONObject
-} from '@phosphor/coreutils';
+import { ReadonlyJSONObject, PromiseDelegate } from '@phosphor/coreutils';
+
+import { DSVModel } from '@jupyterlab/csvviewer';
 
 import * as React from 'react';
 
@@ -43,9 +41,7 @@ import * as ReactDOM from 'react-dom';
 
 import * as Plotly from 'plotly.js';
 
-import * as dl from 'datalib';
-
-import ChartEditor, { IGraphDiv } from './component';
+import ChartEditor, { PlotlyEditorState } from './component';
 
 import '../style/index.css';
 
@@ -72,10 +68,6 @@ const RENDER_TIMEOUT = 1000;
 export namespace CommandIDs {
   export const JL_PLOTLY_EDITOR_OPEN = 'plotly_editor:open';
   export const JL_PLOTLY_EDITOR_SAVE = 'plotly_editor:save';
-}
-
-interface IPlotlyEditorModel extends IGraphDiv {
-  dataSource?: {};
 }
 
 export class PlotlyEditorPanel extends Widget
@@ -154,55 +146,49 @@ export class PlotlyEditorPanel extends Widget
    * Render model to DOM.
    */
   private _render(): void {
-    const getColumnarMap = (data: any[]) => {
-      return data.reduce((result, row) => {
-        Object.entries(row).forEach(([key, value]) => {
-          result[key] = (result[key] || []).concat(value);
-        });
-        return result;
-      }, {});
-    };
-    const model = this._context.model.toString();
-    let data: any = {};
-    let state: IPlotlyEditorModel;
-    if (model) {
-      try {
-        data = JSON.parse(model);
-        if ('data' in (data as {}) && 'layout' in (data as {})) {
-          state = { data: data.data, layout: data.layout };
-          data = (data as IPlotlyEditorModel).dataSource;
-        }
-        // Convert row-based array to column-based map
-        if (Array.isArray(data)) {
-          data = getColumnarMap(data);
-        }
-      } catch (error) {
-        const lines = model.split('\n');
-        const delimiter = lines[0].match(/.+(\t|,)/)[1];
-        const rows = dl.read(model, {
-          type: 'dsv',
-          delimiter,
-          parse: 'auto'
-        }) as ReadonlyJSONObject[];
-        // Convert row-based array to column-based map
-        data = getColumnarMap(rows);
-      }
-    }
-    const handleUpdate = (state: IGraphDiv) => {
-      // this._context.model.fromJSON({ ...state, dataSource: data });
+    const content = this._context.model.toString();
+    let model: DSVModel;
+    let delimiter: string = ',';
+    const handleUpdate = (state: PlotlyEditorState) => {
+      // this._context.model.fromJSON(state);
       // this._context.save();
     };
-    this._ref = ReactDOM.render(
-      <ChartEditor
-        data={data}
-        state={state}
-        handleUpdate={handleUpdate}
-        plotly={Plotly}
-        width={this.node.offsetWidth}
-        height={this.node.offsetHeight}
-      />,
-      this.node
-    ) as ChartEditor;
+    switch (true) {
+      case this._context.path.endsWith('.json'):
+        try {
+          const state = JSON.parse(content);
+          this._ref = ReactDOM.render(
+            <ChartEditor
+              state={state}
+              handleUpdate={handleUpdate}
+              plotly={Plotly}
+            />,
+            this.node
+          ) as ChartEditor;
+          break;
+        } catch (error) {
+          this.node.innerHTML = error.message;
+          this.addClass('jp-RenderedText');
+          this.removeClass(CSS_CLASS);
+          this.node.setAttribute(
+            'data-mime-type',
+            'application/vnd.jupyter.stderr'
+          );
+          break;
+        }
+      case this._context.path.endsWith('.csv') ||
+        this._context.path.endsWith('.tsv'):
+        if (this._context.path.endsWith('.tsv')) delimiter = '\t';
+        model = new DSVModel({ data: content, delimiter });
+        this._ref = ReactDOM.render(
+          <ChartEditor
+            model={model}
+            handleUpdate={handleUpdate}
+            plotly={Plotly}
+          />,
+          this.node
+        ) as ChartEditor;
+    }
   }
 
   protected _context: DocumentRegistry.Context;
@@ -331,25 +317,24 @@ function activate(
       let widget = app.shell.currentWidget;
       if (widget) {
         const ref = (widget as PlotlyEditorPanel)._ref;
+        const data = {
+          data: ref.state.data,
+          layout: ref.state.layout
+        };
         const context = docManager.contextForWidget(widget) as Context<
           DocumentRegistry.IModel
         >;
-        const model = context.model.toJSON();
-        context.model.fromJSON({
-          data: ref.state.graphDiv.data,
-          layout: ref.state.graphDiv.layout,
-          dataSource: (model as JSONObject).dataSource || model
-        });
-        context.save();
+        context.model.fromJSON(data);
+        if (context.path.includes('.plotly.json')) {
+          context.save();
+        } else {
+          context.saveAs();
+        }
       }
     },
     isEnabled: () => {
       const widget = app.shell.currentWidget;
-      if (
-        widget &&
-        widget.hasClass(CSS_CLASS)
-        // && (widget as PlotlyEditorPanel).context.path.indexOf('plotly.json') !== -1
-      ) {
+      if (widget && widget.hasClass(CSS_CLASS)) {
         return true;
       } else {
         return false;
@@ -393,7 +378,6 @@ function activate(
     readOnly: true
   });
 
-  // Handle state restoration.
   restorer.restore(tracker, {
     command: 'docmanager:open',
     args: widget => ({ path: widget.context.path, factory: FACTORY }),
