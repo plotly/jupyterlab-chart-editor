@@ -151,8 +151,10 @@ export class PlotlyEditorPanel extends Widget
     let model: DSVModel;
     let delimiter: string = ',';
     const handleUpdate = (state: PlotlyEditorState) => {
-      // this._context.model.fromJSON(state);
-      // this._context.save();
+      // this._context.initialize(true).then(() => {
+      //   this._context.model.fromJSON(state);
+      //   this._context.save();
+      // });
     };
     switch (true) {
       case this._context.path.endsWith('.plotly.json'):
@@ -265,14 +267,17 @@ function activate(
             const context = docManager.contextForWidget(widget) as Context<
               DocumentRegistry.IModel
             >;
-            context.model.fromJSON(data);
-            context.save().then(() => {
-              if (open) {
-                commands.execute('docmanager:open', {
-                  path: model.path,
-                  factory: FACTORY
-                });
-              }
+
+            context.initialize(true).then(() => {
+              context.model.fromJSON(data);
+              context.save().then(() => {
+                if (open) {
+                  commands.execute('docmanager:open', {
+                    path: model.path,
+                    factory: FACTORY
+                  });
+                }
+              });
             });
           });
       });
@@ -325,12 +330,11 @@ function activate(
         const context = docManager.contextForWidget(widget) as Context<
           DocumentRegistry.IModel
         >;
-        context.model.fromJSON(data);
-        if (context.path.includes('.plotly.json')) {
+        let isNew = !context.path.includes('.plotly.json');
+        context.initialize(isNew).then(() => {
+          context.model.fromJSON(data);
           context.save();
-        } else {
-          context.saveAs();
-        }
+        });
       }
     },
     isEnabled: () => {
@@ -351,6 +355,11 @@ function activate(
   app.contextMenu.addItem({
     command: CommandIDs.JL_PLOTLY_EDITOR_SAVE,
     selector: `.p-Widget.${CSS_CLASS}`
+  });
+
+  app.docRegistry.addFileType({
+    name: 'csv',
+    extensions: ['.csv']
   });
 
   app.docRegistry.addFileType({
