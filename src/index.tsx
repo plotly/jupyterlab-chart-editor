@@ -17,7 +17,7 @@ import {
   Context
 } from '@jupyterlab/docregistry';
 
-import { Widget } from '@phosphor/widgets';
+import { BoxLayout, Widget } from '@phosphor/widgets';
 
 import { Message } from '@phosphor/messaging';
 
@@ -82,13 +82,17 @@ export class PlotlyEditorPanel extends Widget
     this.addClass(CSS_CLASS);
 
     this._context = options.context;
+    let layout = (this.layout = new BoxLayout());
+
+    this._root = new Widget();
+    layout.addWidget(this._root);
 
     this._context.pathChanged.connect(this._onPathChanged, this);
     this._onPathChanged();
 
     this._context.ready.then(() => {
-      this._render();
       this._ready.resolve(undefined);
+      this._render();
       this._monitor = new ActivityMonitor({
         signal: this._context.model.contentChanged,
         timeout: RENDER_TIMEOUT
@@ -118,7 +122,7 @@ export class PlotlyEditorPanel extends Widget
     if (this._monitor) {
       this._monitor.dispose();
     }
-    ReactDOM.unmountComponentAtNode(this.node);
+    ReactDOM.unmountComponentAtNode(this._root.node);
     super.dispose();
   }
 
@@ -178,14 +182,14 @@ export class PlotlyEditorPanel extends Widget
               handleUpdate={handleUpdate}
               plotly={Plotly}
             />,
-            this.node
+            this._root.node
           ) as ChartEditor;
           break;
         } catch (error) {
-          this.node.innerHTML = error.message;
+          this._root.node.innerHTML = error.message;
           this.addClass('jp-RenderedText');
           this.removeClass(CSS_CLASS);
-          this.node.setAttribute(
+          this._root.node.setAttribute(
             'data-mime-type',
             'application/vnd.jupyter.stderr'
           );
@@ -201,7 +205,7 @@ export class PlotlyEditorPanel extends Widget
             handleUpdate={handleUpdate}
             plotly={Plotly}
           />,
-          this.node
+          this._root.node
         ) as ChartEditor;
     }
   }
@@ -209,6 +213,7 @@ export class PlotlyEditorPanel extends Widget
   protected _context: DocumentRegistry.Context;
   private _ready = new PromiseDelegate<void>();
   private _monitor: ActivityMonitor<any, any> | null = null;
+  _root: Widget;
   _ref: ChartEditor;
 }
 
