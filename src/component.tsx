@@ -14,9 +14,10 @@ export interface IGraphDivData {
   xsrc: string;
   y: any[];
   ysrc: string;
+  [key: string]: any;
 }
 
-export type Data = any[];
+export type Data = IGraphDivData[];
 
 export type Layout = {};
 
@@ -102,10 +103,15 @@ export default class ChartEditor extends React.Component<
         }
         return dataSources[column];
       };
-      data.forEach((dataset: IGraphDivData) => {
-        if (dataset.xsrc) dataset.x = getRows(dataset.xsrc);
-        if (dataset.ysrc) dataset.y = getRows(dataset.ysrc);
-      });
+      for (let dataset of data) {
+        for (let property in dataset) {
+          if (property.endsWith('src'))
+            // dataset.x = getRows(dataset.xsrc);
+            dataset[property.substring(0, property.length - 3)] = getRows(
+              dataset[property]
+            );
+        }
+      }
       this.setState(() => ({
         dataSources,
         data
