@@ -58,17 +58,26 @@ export default class ChartEditor extends React.Component<
 > {
   constructor(props: ChartEditorProps) {
     super(props);
-    const data = props.state ? props.state.data : [];
-    const layout = props.state ? props.state.layout : {};
-    const frames = props.state && props.state.frames ? props.state.frames : [];
+    // TODO: Remove after upgrading to React 16.3
+    this.state = ChartEditor.getDerivedStateFromProps(props);
+  }
+
+  static getDerivedStateFromProps(
+    nextProps: ChartEditorProps,
+    prevState?: ChartEditorState
+  ) {
+    const data = nextProps.state ? nextProps.state.data : [];
+    const layout = nextProps.state ? nextProps.state.layout : {};
+    const frames =
+      nextProps.state && nextProps.state.frames ? nextProps.state.frames : [];
     let dataSources: DataSource = {};
     let dataSourceOptions: DataSourceOption[] = [];
     let header: string[] = [];
-    if (props.model) {
-      const columnCount: number = props.model.columnCount('body');
+    if (nextProps.model) {
+      const columnCount: number = nextProps.model.columnCount('body');
       for (let columnIndex = 0; columnIndex < columnCount; columnIndex++) {
         header = header.concat(
-          props.model.data('column-header', 0, columnIndex)
+          nextProps.model.data('column-header', 0, columnIndex)
         );
       }
       dataSources = header.reduce((result: { [key: string]: any[] }, item) => {
@@ -80,7 +89,7 @@ export default class ChartEditor extends React.Component<
         label: name
       }));
     }
-    this.state = {
+    return {
       data,
       layout,
       frames,
@@ -88,6 +97,13 @@ export default class ChartEditor extends React.Component<
       dataSourceOptions,
       header
     };
+  }
+
+  // TODO: Remove after upgrading to React 16.3
+  componentWillReceiveProps(nextProps: ChartEditorProps) {
+    this.setState((prevState: ChartEditorState) =>
+      ChartEditor.getDerivedStateFromProps(nextProps, prevState)
+    );
   }
 
   handleUpdate = (data: Data, layout: Layout, frames: Frames) => {
