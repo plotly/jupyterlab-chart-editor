@@ -154,7 +154,7 @@ export class PlotlyEditorPanel extends Widget
       // this._context.save();
     };
     switch (true) {
-      case this._context.path.endsWith('.json'):
+      case this._context.path.endsWith('.plotly.json'):
         try {
           const state = JSON.parse(content);
           this._ref = ReactDOM.render(
@@ -227,7 +227,7 @@ class PlotlyEditorWidgetFactory extends ABCWidgetFactory<
   }
 }
 
-const fileTypes = ['csv', 'json', 'tsv', 'txt', 'plotly', 'plotly.json'];
+const fileTypes = ['csv', 'tsv', 'txt', 'plotly', 'plotly.json'];
 
 function activate(
   app: JupyterLab,
