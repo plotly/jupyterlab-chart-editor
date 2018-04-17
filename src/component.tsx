@@ -98,17 +98,13 @@ export default class ChartEditor extends React.Component<
         if (dataSources[column].length > 0) return dataSources[column];
         const columnIndex = header.indexOf(column);
         for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-          dataSources[column] = [
-            ...(dataSources[column] || []),
-            model.data('body', rowIndex, columnIndex)
-          ];
+          dataSources[column].push(model.data('body', rowIndex, columnIndex));
         }
         return dataSources[column];
       };
-      data = data.map((dataset: IGraphDivData) => {
+      data.forEach((dataset: IGraphDivData) => {
         if (dataset.xsrc) dataset.x = getRows(dataset.xsrc);
         if (dataset.ysrc) dataset.y = getRows(dataset.ysrc);
-        return dataset;
       });
       this.setState(() => ({
         dataSources,
