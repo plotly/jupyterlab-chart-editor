@@ -118,8 +118,9 @@ export const rendererFactory: IRenderMime.IRendererFactory = {
   createRenderer: options => new RenderedPlotlyEditor(options)
 };
 
-const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
+const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] | any = [
   {
+    id: 'jupyterlab-chart-editor:factory',
     name: 'jupyterlab-chart-editor:factory',
     rendererFactory,
     rank: 0,
