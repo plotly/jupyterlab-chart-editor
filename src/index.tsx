@@ -120,7 +120,7 @@ export const rendererFactory: IRenderMime.IRendererFactory = {
 
 const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
   {
-    id: 'jupyterlab-chart-editor:factory',
+    name: 'jupyterlab-chart-editor:factory',
     rendererFactory,
     rank: 0,
     dataType: 'string',
@@ -146,6 +146,7 @@ const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
     ],
     documentWidgetFactoryOptions: {
       name: 'Plotly Editor',
+      modelName: 'text',
       primaryFileType: 'csv',
       fileTypes: ['csv', 'tsv']
     }
