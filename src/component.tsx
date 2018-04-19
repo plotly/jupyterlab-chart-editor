@@ -47,6 +47,7 @@ export interface ChartEditorState {
   data: Data;
   layout: Layout;
   frames: Frames;
+  model?: DSVModel;
   dataSources: DataSource;
   dataSourceOptions: DataSourceOption[];
   header: string[];
@@ -58,45 +59,50 @@ export default class ChartEditor extends React.Component<
 > {
   constructor(props: ChartEditorProps) {
     super(props);
+    const initialState: ChartEditorState = {
+      data: props.state ? props.state.data || [] : [],
+      layout: props.state ? props.state.layout || {} : {},
+      frames: props.state ? props.state.frames || [] : [],
+      model: null,
+      dataSources: {},
+      dataSourceOptions: [],
+      header: []
+    };
     // TODO: Remove after upgrading to React 16.3
-    this.state = ChartEditor.getDerivedStateFromProps(props);
+    this.state = ChartEditor.getDerivedStateFromProps(props, initialState);
   }
 
   static getDerivedStateFromProps(
     nextProps: ChartEditorProps,
     prevState?: ChartEditorState
   ) {
-    const data = nextProps.state ? nextProps.state.data : [];
-    const layout = nextProps.state ? nextProps.state.layout : {};
-    const frames =
-      nextProps.state && nextProps.state.frames ? nextProps.state.frames : [];
-    let dataSources: DataSource = {};
-    let dataSourceOptions: DataSourceOption[] = [];
-    let header: string[] = [];
-    if (nextProps.model) {
-      const columnCount: number = nextProps.model.columnCount('body');
+    if (nextProps.model !== prevState.model) {
+      const { model } = nextProps;
+      const columnCount: number = model.columnCount('body');
+      let header = [];
       for (let columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-        header = header.concat(
-          nextProps.model.data('column-header', 0, columnIndex)
-        );
+        header.push(model.data('column-header', 0, columnIndex));
       }
-      dataSources = header.reduce((result: { [key: string]: any[] }, item) => {
-        result[item] = [];
-        return result;
-      }, {});
-      dataSourceOptions = header.map(name => ({
+      const dataSources = header.reduce(
+        (result: { [key: string]: any[] }, item) => {
+          result[item] = [];
+          return result;
+        },
+        {}
+      );
+      const dataSourceOptions = header.map(name => ({
         value: name,
         label: name
       }));
+      return {
+        ...prevState,
+        model,
+        header,
+        dataSources,
+        dataSourceOptions
+      };
     }
-    return {
-      data,
-      layout,
-      frames,
-      dataSources,
-      dataSourceOptions,
-      header
-    };
+    return prevState;
   }
 
   // TODO: Remove after upgrading to React 16.3

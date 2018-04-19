@@ -13,11 +13,7 @@ import * as ReactDOM from 'react-dom';
 
 import * as Plotly from 'plotly.js';
 
-import {
-  // ReadonlyJSONValue,
-  // ReadonlyJSONArray,
-  ReadonlyJSONObject
-} from '@phosphor/coreutils';
+import { ReadonlyJSONObject } from '@phosphor/coreutils';
 
 import ChartEditor, { PlotlyEditorState } from './component';
 
@@ -66,7 +62,7 @@ export class RenderedPlotlyEditor extends Widget
       const metadata = model.metadata[this._mimeType] as
         | ReadonlyJSONObject
         | PlotlyEditorState;
-      let delimiter = data.substr(0, 250).match(/.+(\t|,)/)[1];
+      const delimiter = data.substr(0, 250).match(/.+(\t|,)/)[1];
       const dsvModel = new DSVModel({ data, delimiter });
       const handleUpdate = (state: PlotlyEditorState | ReadonlyJSONObject) => {
         const metadata = { [this._mimeType]: state as ReadonlyJSONObject };
