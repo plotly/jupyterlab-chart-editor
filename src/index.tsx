@@ -5,21 +5,17 @@ import { Widget } from '@phosphor/widgets';
 
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 
+import { DSVModel } from '@jupyterlab/csvviewer';
+
 import * as React from 'react';
 
 import * as ReactDOM from 'react-dom';
 
 import * as Plotly from 'plotly.js';
 
-import * as dl from 'datalib';
+import { ReadonlyJSONObject } from '@phosphor/coreutils';
 
-import {
-  ReadonlyJSONValue,
-  ReadonlyJSONArray,
-  ReadonlyJSONObject
-} from '@phosphor/coreutils';
-
-import ChartEditor, { IState } from './component';
+import ChartEditor, { PlotlyEditorState } from './component';
 
 import '../style/index.css';
 
@@ -38,13 +34,6 @@ const CSS_ICON_CLASS = 'jp-MaterialIcon jp-PlotlyIcon';
  */
 export const MIME_TYPE = 'application/vnd.plotly-editor.v1+json';
 
-/**
- * Type interface for RenderedPlotlyEditor metadata.
- */
-export interface IMetadata extends IState {
-  [key: string]: any;
-}
-
 export class RenderedPlotlyEditor extends Widget
   implements IRenderMime.IRenderer {
   /**
@@ -54,7 +43,14 @@ export class RenderedPlotlyEditor extends Widget
     super();
     this.addClass(CSS_CLASS);
     this._mimeType = options.mimeType;
-    if (!Private.loadingPlotly) Private.loadPlotly();
+  }
+
+  /**
+   * Dispose of the resources used by the widget.
+   */
+  dispose(): void {
+    ReactDOM.unmountComponentAtNode(this.node);
+    super.dispose();
   }
 
   /**
@@ -63,55 +59,33 @@ export class RenderedPlotlyEditor extends Widget
   renderModel(model: IRenderMime.IMimeModel): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       const data = model.data[this._mimeType] as string;
-      const metadata = model.metadata[this._mimeType] as IMetadata;
-      if (!data) {
-        reject(undefined);
+      const metadata = model.metadata[this._mimeType] as
+        | ReadonlyJSONObject
+        | PlotlyEditorState;
+      try {
+        const delimiter = data.substr(0, 250).match(/.+(\t|,)/)[1];
+        const dsvModel = new DSVModel({ data, delimiter });
+        const handleUpdate = (
+          state: PlotlyEditorState | ReadonlyJSONObject
+        ) => {
+          const metadata = { [this._mimeType]: state as ReadonlyJSONObject };
+          model.setData({ metadata });
+        };
+        this._ref = ReactDOM.render(
+          <ChartEditor
+            model={dsvModel}
+            state={metadata as PlotlyEditorState}
+            handleUpdate={handleUpdate}
+            plotly={Plotly}
+          />,
+          this.node,
+          () => {
+            resolve(undefined);
+          }
+        ) as ChartEditor;
+      } catch (error) {
+        reject(error);
       }
-      let json: ReadonlyJSONValue;
-      if (typeof data === 'string') {
-        // If data is from document, parse JSON
-        try {
-          json = JSON.parse(data);
-        } catch (error) {
-          const lines = data.split('\n');
-          const delimiter = lines[0].match(/.+(\t|,)/)[1];
-          const rows = dl.read(data, {
-            type: 'dsv',
-            delimiter,
-            parse: 'auto'
-          }) as ReadonlyJSONObject[];
-          json = rows.reduce(
-            (result: { [key: string]: ReadonlyJSONArray }, row) => {
-              Object.entries(row).forEach(([key, value]) => {
-                result[key] = (result[key] || []).concat(value);
-              });
-              return result;
-            },
-            {}
-          );
-        }
-      } else {
-        // If data is from notebook output
-        json = data;
-      }
-      const handleUpdate = (state: IMetadata) => {
-        const metadata = { [this._mimeType]: state };
-        model.setData({ metadata });
-      };
-      this._ref = ReactDOM.render(
-        <ChartEditor
-          data={json}
-          metadata={metadata}
-          plotly={Plotly}
-          handleUpdate={handleUpdate}
-          width={this.node.offsetWidth}
-          height={this.node.offsetHeight}
-        />,
-        this.node,
-        () => {
-          resolve(undefined);
-        }
-      ) as ChartEditor;
     });
   }
 
@@ -140,7 +114,7 @@ export class RenderedPlotlyEditor extends Widget
  */
 export const rendererFactory: IRenderMime.IRendererFactory = {
   safe: true,
-  mimeTypes: [MIME_TYPE],
+  mimeTypes: [MIME_TYPE, 'text/csv', 'text/tsv'],
   createRenderer: options => new RenderedPlotlyEditor(options)
 };
 
@@ -151,49 +125,31 @@ const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
     rank: 0,
     dataType: 'string',
     fileTypes: [
+      // {
+      //   name: 'plotlyEditor',
+      //   mimeTypes: [MIME_TYPE],
+      //   extensions: ['.plotly', 'plotly.json'],
+      //   iconClass: CSS_ICON_CLASS
+      // },
       {
-        name: 'plotlyEditor',
-        mimeTypes: [MIME_TYPE],
-        extensions: ['.plotly', '.plotly.json'],
+        name: 'csv',
+        mimeTypes: ['text/csv'],
+        extensions: ['.csv'],
         iconClass: CSS_ICON_CLASS
       },
       {
         name: 'tsv',
-        mimeTypes: ['text/csv'],
-        extensions: ['.tsv']
-      },
-      {
-        name: 'txt',
-        mimeTypes: ['text/plain'],
-        extensions: ['.txt']
+        mimeTypes: ['text/tsv'],
+        extensions: ['.tsv'],
+        iconClass: CSS_ICON_CLASS
       }
     ],
     documentWidgetFactoryOptions: {
       name: 'Plotly Editor',
-      primaryFileType: 'plotlyEditor',
-      fileTypes: ['json', 'plotlyEditor', 'csv', 'tsv', 'txt']
+      primaryFileType: 'csv',
+      fileTypes: ['csv', 'tsv']
     }
   }
 ];
-
-namespace Private {
-  declare function require(moduleName: string): string;
-
-  /**
-   * Is plotly.js being loaded?.
-   */
-  export let loadingPlotly = false;
-
-  /**
-   * Load plotly.js browser script.
-   */
-  export function loadPlotly(): void {
-    loadingPlotly = true;
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.text = require('raw-loader!plotly.js/dist/plotly.min.js');
-    document.head.appendChild(script);
-  }
-}
 
 export default extensions;

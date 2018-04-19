@@ -2,126 +2,185 @@ import * as React from 'react';
 
 import PlotlyEditor from 'react-chart-editor';
 
-import createPlotComponent = require('react-plotly.js/factory');
+import { DSVModel } from '@jupyterlab/csvviewer';
 
 import 'react-chart-editor/lib/react-chart-editor.css';
 
-let Plot: any;
-
-export interface IGraphDiv {
-  data?: Object[];
-  layout?: Object;
+export interface IGraphDivData {
+  mode: string;
+  type: string;
+  uid: string;
+  x: any[];
+  xsrc: string;
+  y: any[];
+  ysrc: string;
+  [key: string]: any;
 }
 
-export interface IProps {
-  data: Object;
-  metadata?: IState;
-  handleUpdate?: (state: IState) => void;
+export type Data = IGraphDivData[];
+
+export type Layout = {};
+
+export type Frames = any[];
+
+export type DataSource = { [key: string]: any };
+
+export interface DataSourceOption {
+  value: string;
+  label: string;
+}
+
+export interface PlotlyEditorState {
+  data: Data;
+  layout: Layout;
+  frames?: Frames;
+}
+
+export interface ChartEditorProps {
+  state?: PlotlyEditorState;
+  model?: DSVModel;
+  handleUpdate?: (state: PlotlyEditorState) => void;
   plotly: any;
-  width?: number;
-  height?: number;
 }
 
-export interface IState {
-  editing?: boolean;
-  graphDiv: IGraphDiv;
-  editorRevision: number;
-  plotRevision: number;
+export interface ChartEditorState {
+  data: Data;
+  layout: Layout;
+  frames: Frames;
+  model?: DSVModel;
+  dataSources: DataSource;
+  dataSourceOptions: DataSourceOption[];
+  header: string[];
 }
 
-export default class ChartEditor extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+export default class ChartEditor extends React.Component<
+  ChartEditorProps,
+  ChartEditorState
+> {
+  constructor(props: ChartEditorProps) {
     super(props);
-    Plot = createPlotComponent(props.plotly);
-    const initialState = {
-      editing: true,
-      graphDiv: {
-        data: [],
-        layout: {}
-      },
-      editorRevision: 0,
-      plotRevision: 0
-    } as IState;
-    this.state = props.metadata ? props.metadata : initialState;
+    const initialState: ChartEditorState = {
+      data: props.state ? props.state.data || [] : [],
+      layout: props.state ? props.state.layout || {} : {},
+      frames: props.state ? props.state.frames || [] : [],
+      model: null,
+      dataSources: {},
+      dataSourceOptions: [],
+      header: []
+    };
+    // TODO: Remove after upgrading to React 16.3
+    this.state = ChartEditor.getDerivedStateFromProps(props, initialState);
   }
 
-  componentWillReceiveProps(nextProps: IProps) {
-    if (nextProps.metadata && nextProps.metadata !== this.props.metadata) {
-      const { graphDiv } = nextProps.metadata;
-      this.setState(() => {
-        graphDiv;
-      });
-    }
-  }
-
-  handlePlotUpdate = (graphDiv: any) => {
-    this.setState(({ editorRevision: x }: { editorRevision: number }) => ({
-      editorRevision: x + 1,
-      graphDiv
-    }));
-    const { data, layout } = graphDiv;
-    this.props.handleUpdate({
-      ...this.state,
-      graphDiv: { data, layout }
-    });
-  };
-
-  handleEditorUpdate = () => {
-    this.setState(({ plotRevision: x }: { plotRevision: number }) => ({
-      plotRevision: x + 1
-    }));
-  };
-
-  handleToggle = () => {
-    this.setState(
-      ({ editing }) => ({
-        editing: !editing
-      }),
-      () => {
-        window.setTimeout(() => {
-          this.handleResize();
-        }, 500);
+  static getDerivedStateFromProps(
+    nextProps: ChartEditorProps,
+    prevState?: ChartEditorState
+  ) {
+    if (nextProps.model !== prevState.model) {
+      const { model } = nextProps;
+      const columnCount: number = model.columnCount('body');
+      let header = [];
+      for (let columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+        header.push(model.data('column-header', 0, columnIndex));
       }
+      const dataSources = header.reduce(
+        (result: { [key: string]: any[] }, item) => {
+          result[item] = [];
+          return result;
+        },
+        {}
+      );
+      const dataSourceOptions = header.map(name => ({
+        value: name,
+        label: name
+      }));
+      return {
+        ...prevState,
+        model,
+        header,
+        dataSources,
+        dataSourceOptions
+      };
+    }
+    return prevState;
+  }
+
+  // TODO: Remove after upgrading to React 16.3
+  componentWillReceiveProps(nextProps: ChartEditorProps) {
+    this.setState((prevState: ChartEditorState) =>
+      ChartEditor.getDerivedStateFromProps(nextProps, prevState)
     );
+  }
+
+  handleUpdate = (data: Data, layout: Layout, frames: Frames) => {
+    const { model } = this.props;
+    if (model) {
+      const { dataSources, header } = this.state;
+      const rowCount = model.rowCount('body');
+      const getRows = (column: string) => {
+        if (dataSources[column].length > 0) return dataSources[column];
+        const columnIndex = header.indexOf(column);
+        for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+          dataSources[column].push(model.data('body', rowIndex, columnIndex));
+        }
+        return dataSources[column];
+      };
+      for (let dataset of data) {
+        for (let property in dataset) {
+          if (property.endsWith('src'))
+            // dataset.x = getRows(dataset.xsrc);
+            dataset[property.substring(0, property.length - 3)] = getRows(
+              dataset[property]
+            );
+        }
+      }
+      this.setState(() => ({
+        dataSources,
+        data,
+        layout,
+        frames
+      }));
+    } else {
+      this.setState(() => ({
+        data,
+        layout,
+        frames
+      }));
+    }
+    this.props.handleUpdate({ data, layout, frames });
   };
 
   handleResize = () => {
-    this.props.plotly.Plots.resize(this.state.graphDiv);
+    if (this.ref.state.graphDiv instanceof HTMLElement)
+      this.props.plotly.Plots.resize(this.ref.state.graphDiv);
   };
 
   render() {
-    const { data, plotly } = this.props;
-    const dataSourceOptions = Object.keys(data).map(name => ({
-      value: name,
-      label: name
-    }));
+    const { plotly } = this.props;
+    const { data, layout, frames, dataSources, dataSourceOptions } = this.state;
+    const config = { editable: true };
     return (
       <div className="container">
         <PlotlyEditor
-          className={
-            this.state.editing ? 'plotly-editor toggled' : 'plotly-editor'
-          }
-          config={{ editable: true }}
-          graphDiv={this.state.graphDiv}
-          onUpdate={this.handleEditorUpdate}
-          revision={this.state.editorRevision}
-          dataSources={data}
+          ref={ref => {
+            this.ref = ref;
+          }}
+          className="plotly-editor"
+          data={data}
+          layout={layout}
+          config={config}
+          frames={frames}
+          dataSources={dataSources}
           dataSourceOptions={dataSourceOptions}
           plotly={plotly}
-        />
-        <div className="toggle" onClick={this.handleToggle}>
-          <div className={this.state.editing ? 'button toggled' : 'button'} />
-        </div>
-        <Plot
-          className="plot"
-          config={{ editable: true }}
-          data={this.state.graphDiv.data}
-          layout={this.state.graphDiv.layout}
-          onUpdate={this.handlePlotUpdate}
-          onInitialized={this.handlePlotUpdate}
-          revision={this.state.plotRevision}
+          onUpdate={this.handleUpdate}
+          useResizeHandler
+          debug
+          advancedTraceTypeSelector
         />
       </div>
     );
   }
+
+  ref: PlotlyEditor;
 }
