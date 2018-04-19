@@ -162,7 +162,7 @@ export default class ChartEditor extends React.Component<
     return (
       <div className="container">
         <PlotlyEditor
-          ref={ref => {
+          ref={(ref: PlotlyEditor) => {
             this.ref = ref;
           }}
           className="plotly-editor"

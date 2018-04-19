@@ -118,9 +118,10 @@ export const rendererFactory: IRenderMime.IRendererFactory = {
   createRenderer: options => new RenderedPlotlyEditor(options)
 };
 
-const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
+const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] | any = [
   {
     id: 'jupyterlab-chart-editor:factory',
+    name: 'jupyterlab-chart-editor:factory',
     rendererFactory,
     rank: 0,
     dataType: 'string',
@@ -146,6 +147,7 @@ const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] = [
     ],
     documentWidgetFactoryOptions: {
       name: 'Plotly Editor',
+      modelName: 'text',
       primaryFileType: 'csv',
       fileTypes: ['csv', 'tsv']
     }
