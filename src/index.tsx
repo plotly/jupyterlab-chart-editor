@@ -62,13 +62,15 @@ export class RenderedPlotlyEditor extends Widget
       const metadata = model.metadata[this._mimeType] as
         | ReadonlyJSONObject
         | PlotlyEditorState;
-      const delimiter = data.substr(0, 250).match(/.+(\t|,)/)[1];
-      const dsvModel = new DSVModel({ data, delimiter });
-      const handleUpdate = (state: PlotlyEditorState | ReadonlyJSONObject) => {
-        const metadata = { [this._mimeType]: state as ReadonlyJSONObject };
-        model.setData({ metadata });
-      };
       try {
+        const delimiter = data.substr(0, 250).match(/.+(\t|,)/)[1];
+        const dsvModel = new DSVModel({ data, delimiter });
+        const handleUpdate = (
+          state: PlotlyEditorState | ReadonlyJSONObject
+        ) => {
+          const metadata = { [this._mimeType]: state as ReadonlyJSONObject };
+          model.setData({ metadata });
+        };
         this._ref = ReactDOM.render(
           <ChartEditor
             model={dsvModel}
