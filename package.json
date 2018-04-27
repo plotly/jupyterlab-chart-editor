@@ -1,6 +1,6 @@
 {
   "name": "jupyterlab-chart-editor",
-  "version": "0.2.23452345",
+  "version": "0.2.0",
   "description":
     "A JupyterLab extension for creating and editing Plotly charts",
   "keywords": [
