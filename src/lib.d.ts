@@ -1,13 +1,5 @@
-// Type definitions for react-plotly.js 1.2.0
-// Project: https://github.com/plotly/react-plotly.js
-// Definitions by: Grant Nestor <https://github.com/gnestor>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 2.6
-
-declare module 'react-plotly.js/factory' {
-  function createPlotComponent(Plotly: any): any;
-
-  export = createPlotComponent;
+declare module 'plotly.js/dist/plotly' {
+  export * from 'plotly.js';
 }
 
 declare module 'react-chart-editor' {
@@ -23,10 +15,4 @@ declare module 'react-chart-editor' {
   // }
 
   export default class PlotlyEditor extends React.Component<any, any> {}
-}
-
-declare module 'plotly.js/dist/plotly' {
-  var Plotly: any;
-
-  export = Plotly;
 }
