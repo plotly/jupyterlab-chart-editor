@@ -121,7 +121,7 @@ const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] | any = [
     dataType: 'json',
     fileTypes: [
       {
-        name: 'plotly',
+        name: 'plotlyeditor',
         mimeTypes: [MIME_TYPE],
         extensions: ['.plotly', '.plotly.json'],
         iconClass: CSS_ICON_CLASS
@@ -129,9 +129,10 @@ const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] | any = [
     ],
     documentWidgetFactoryOptions: {
       name: 'Plotly Editor',
-      primaryFileType: 'plotly',
-      fileTypes: ['plotly', 'json'],
-      defaultFor: ['plotly']
+      primaryFileType: 'plotlyeditor',
+      // The 'plotly' type is defined in @jupyterlab/plotly-extension
+      fileTypes: ['plotly', 'plotlyeditor', 'json'],
+      defaultFor: ['plotlyeditor']
     }
   }
 ];
