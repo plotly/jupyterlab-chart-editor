@@ -1,0 +1,1 @@
+{"data":[{"type":"scatter","y":[2,4,3,2.5],"mode":"lines+markers","line":{"width":6,"shape":"spline","color":"rgb(152, 61, 245)","dash":"dash"}}],"layout":{"xaxis":{"range":[-0.18418839360807396,3.184188393608074],"autorange":true},"yaxis":{"type":"linear","range":[1.8788752703677,4.1211247296322995],"autorange":true},"autosize":true},"frames":[]}
