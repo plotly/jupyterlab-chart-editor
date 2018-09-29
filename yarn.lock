@@ -21,27 +21,6 @@
     orbit-camera-controller "^4.0.0"
     turntable-camera-controller "^3.0.0"
 
-"@etpinard/gl-text@^1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@etpinard/gl-text/-/gl-text-1.1.6.tgz#985791e31ef5ae591a2fd8d4401de64d34080196"
-  dependencies:
-    color-normalize "^1.1.0"
-    css-font "^1.2.0"
-    detect-kerning "^2.1.2"
-    es6-weak-map "^2.0.2"
-    flatten-vertex-data "^1.0.2"
-    font-atlas "^2.1.0"
-    font-measure "^1.2.2"
-    gl-util "^3.0.7"
-    is-plain-obj "^1.1.0"
-    object-assign "^4.1.1"
-    parse-rect "^1.2.0"
-    parse-unit "^1.0.1"
-    pick-by-alias "^1.2.0"
-    regl "^1.3.6"
-    to-px "^1.0.1"
-    typedarray-pool "^1.1.0"
-
 "@jupyterlab/apputils@^0.17.2":
   version "0.17.2"
   resolved "https://registry.yarnpkg.com/@jupyterlab/apputils/-/apputils-0.17.2.tgz#ccd12ffcca15c68317e28f9a88dca9b782cf4d15"
@@ -507,9 +486,9 @@ atob-lite@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/atob-lite/-/atob-lite-1.0.0.tgz#b88dca6006922b962094f7556826bab31c4a296b"
 
-attr-accept@^1.0.3:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-1.1.2.tgz#6836bfe054e4ef1ee3076fdde56cec9bb3ffead6"
+attr-accept@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-1.1.3.tgz#48230c79f93790ef2775fcec4f0db0f5db41ca52"
   dependencies:
     core-js "^2.5.0"
 
@@ -537,6 +516,10 @@ barycentric@^1.0.1:
   resolved "https://registry.yarnpkg.com/barycentric/-/barycentric-1.0.1.tgz#f1562bb891b26f4fec463a82eeda3657800ec688"
   dependencies:
     robust-linear-solve "^1.0.0"
+
+base64-js@^1.0.2:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.0.tgz#cab1e6118f051095e58b5281aea8c1cd22bfc0e3"
 
 big-rat@^1.0.3:
   version "1.0.4"
@@ -634,6 +617,13 @@ buffer-equal@0.0.1:
 buffer-from@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.0.0.tgz#4cb8832d23612589b0406e9e2956c17f06fdf531"
+
+buffer@^5.0.3:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.2.1.tgz#dd57fa0f109ac59c602479044dca7b8b3d0b71d6"
+  dependencies:
+    base64-js "^1.0.2"
+    ieee754 "^1.1.4"
 
 builtin-modules@^1.1.1:
   version "1.1.1"
@@ -776,7 +766,7 @@ color-normalize@^1.0.0, color-normalize@^1.0.3:
     color-rgba "^2.0.0"
     dtype "^2.0.0"
 
-color-normalize@^1.1.0:
+color-normalize@^1.1.0, color-normalize@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/color-normalize/-/color-normalize-1.3.0.tgz#fcf1f822196b863416fc701350dff8d1e8fdebe1"
   dependencies:
@@ -926,6 +916,10 @@ css-animation@^1.3.2:
     babel-runtime "6.x"
     component-classes "^1.2.5"
 
+css-color-keywords@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/css-color-keywords/-/css-color-keywords-1.0.0.tgz#fea2616dc676b2962686b3af8dbdbe180b244e05"
+
 css-font-size-keywords@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/css-font-size-keywords/-/css-font-size-keywords-1.0.0.tgz#854875ace9aca6a8d2ee0d345a44aae9bb6db6cb"
@@ -963,6 +957,14 @@ css-global-keywords@^1.0.1:
 css-system-font-keywords@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/css-system-font-keywords/-/css-system-font-keywords-1.0.0.tgz#85c6f086aba4eb32c571a3086affc434b84823ed"
+
+css-to-react-native@^2.0.3:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.2.2.tgz#c077d0f7bf3e6c915a539e7325821c9dd01f9965"
+  dependencies:
+    css-color-keywords "^1.0.0"
+    fbjs "^0.8.5"
+    postcss-value-parser "^3.3.0"
 
 csscolorparser@~1.0.2:
   version "1.0.3"
@@ -1402,6 +1404,18 @@ fbjs@^0.8.15, fbjs@^0.8.16:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.9"
 
+fbjs@^0.8.5:
+  version "0.8.17"
+  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
+  dependencies:
+    core-js "^1.0.0"
+    isomorphic-fetch "^2.1.1"
+    loose-envify "^1.0.0"
+    object-assign "^4.1.0"
+    promise "^7.1.1"
+    setimmediate "^1.0.5"
+    ua-parser-js "^0.7.18"
+
 filtered-vector@^1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/filtered-vector/-/filtered-vector-1.2.4.tgz#56453c034df4302d293ca8ecdeac3f90abc678d3"
@@ -1777,6 +1791,28 @@ gl-surface3d@^1.3.5:
     surface-nets "^1.0.2"
     typedarray-pool "^1.0.0"
 
+gl-text@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/gl-text/-/gl-text-1.1.6.tgz#1c9aa1e8dbbb9b63067b23a1359bc56ad63922ab"
+  dependencies:
+    bit-twiddle "^1.0.2"
+    color-normalize "^1.1.0"
+    css-font "^1.2.0"
+    detect-kerning "^2.1.2"
+    es6-weak-map "^2.0.2"
+    flatten-vertex-data "^1.0.2"
+    font-atlas "^2.1.0"
+    font-measure "^1.2.2"
+    gl-util "^3.0.7"
+    is-plain-obj "^1.1.0"
+    object-assign "^4.1.1"
+    parse-rect "^1.2.0"
+    parse-unit "^1.0.1"
+    pick-by-alias "^1.2.0"
+    regl "^1.3.6"
+    to-px "^1.0.1"
+    typedarray-pool "^1.1.0"
+
 gl-texture2d@^2.0.0, gl-texture2d@^2.0.2, gl-texture2d@^2.0.8:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/gl-texture2d/-/gl-texture2d-2.1.0.tgz#ff6824e7e7c31a8ba6fdcdbe9e5c695d7e2187c7"
@@ -1966,6 +2002,27 @@ glslify@^6.0.2, glslify@^6.1.0, glslify@^6.1.1:
     through2 "^2.0.1"
     xtend "^4.0.0"
 
+glslify@^6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/glslify/-/glslify-6.3.1.tgz#af74f4a47497603f21498ad14172396cddc8062f"
+  dependencies:
+    bl "^1.0.0"
+    concat-stream "^1.5.2"
+    duplexify "^3.4.5"
+    falafel "^2.1.0"
+    from2 "^2.3.0"
+    glsl-resolve "0.0.1"
+    glsl-token-whitespace-trim "^1.0.0"
+    glslify-bundle "^5.0.0"
+    glslify-deps "^1.2.5"
+    minimist "^1.2.0"
+    resolve "^1.1.5"
+    stack-trace "0.0.9"
+    static-eval "^2.0.0"
+    tape "^4.6.0"
+    through2 "^2.0.1"
+    xtend "^4.0.0"
+
 graceful-fs@^4.1.2:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
@@ -1989,6 +2046,10 @@ has-ansi@^2.0.0:
   dependencies:
     ansi-regex "^2.0.0"
 
+has-flag@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-1.0.0.tgz#9d9e793165ce017a00f00418c43f942a7b1d11fa"
+
 has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
@@ -2011,6 +2072,10 @@ has@^1.0.0, has@^1.0.1, has@~1.0.1:
   dependencies:
     function-bind "^1.0.2"
 
+hoist-non-react-statics@^2.5.0:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
+
 hsluv@^0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/hsluv/-/hsluv-0.0.3.tgz#829107dafb4a9f8b52a1809ed02e091eade6754c"
@@ -2032,13 +2097,17 @@ iconv-lite@~0.4.13:
   dependencies:
     safer-buffer "^2.1.0"
 
+ieee754@^1.1.4:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.12.tgz#50bf24e5b9c8bb98af4964c941cdb0918da7b60b"
+
 ieee754@^1.1.6:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.11.tgz#c16384ffe00f5b7835824e67b6f2bd44a5229455"
 
-immutability-helper@^2.6.4:
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-2.6.6.tgz#9b384c240d65257133c155086e16f678ca563b05"
+immutability-helper@^2.7.1:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-2.8.1.tgz#3c5ec05fcd83676bfae7146f319595243ad904f4"
   dependencies:
     invariant "^2.2.0"
 
@@ -2705,29 +2774,23 @@ planar-graph-to-polyline@^1.0.0:
     two-product "^1.0.0"
     uniq "^1.0.0"
 
-plotly-icons@latest:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/plotly-icons/-/plotly-icons-1.2.1.tgz#a140d0f57d1e8f6424bc71465b0a64d47c7be721"
+plotly-icons@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/plotly-icons/-/plotly-icons-1.2.2.tgz#a8f5cb032a1cdc537b72b2a412deee844e7a1589"
   dependencies:
     mdi-react "^3.0.0"
     prop-types "^15.6.1"
 
-plotly.js-dist@1.39.3:
-  version "1.39.3"
-  resolved "https://registry.yarnpkg.com/plotly.js-dist/-/plotly.js-dist-1.39.3.tgz#e53a2f24f90d8a1d733519c107b547a70baebe76"
-
-plotly.js@1.39.2:
-  version "1.39.2"
-  resolved "https://registry.yarnpkg.com/plotly.js/-/plotly.js-1.39.2.tgz#39f3d8fc89314848c0ac72bb2fbb0d2ddd64a60b"
+plotly.js@1.41.2:
+  version "1.41.2"
+  resolved "https://registry.yarnpkg.com/plotly.js/-/plotly.js-1.41.2.tgz#4e42252293191b1668602a2ef1d78d8d3f89331e"
   dependencies:
     "3d-view" "^2.0.0"
-    "@etpinard/gl-text" "^1.1.6"
     "@plotly/d3-sankey" "^0.5.0"
     alpha-shape "^1.0.0"
     array-range "^1.0.1"
     canvas-fit "^1.5.0"
-    color-normalize "^1.0.3"
-    color-rgba "^2.0.0"
+    color-normalize "^1.3.0"
     convex-hull "^1.0.3"
     country-regex "^1.1.0"
     d3 "^3.5.12"
@@ -2751,7 +2814,8 @@ plotly.js@1.39.2:
     gl-spikes2d "^1.0.1"
     gl-streamtube3d "^1.0.0"
     gl-surface3d "^1.3.5"
-    glslify "^6.1.1"
+    gl-text "^1.1.6"
+    glslify "^6.3.1"
     has-hover "^1.0.1"
     has-passive-events "^1.0.0"
     mapbox-gl "0.45.0"
@@ -2765,11 +2829,11 @@ plotly.js@1.39.2:
     ndarray-ops "^1.2.2"
     point-cluster "^3.1.4"
     polybooljs "^1.2.0"
-    regl "^1.3.6"
+    regl "^1.3.7"
     regl-error2d "^2.0.5"
-    regl-line2d "^3.0.9"
-    regl-scatter2d "^3.0.4"
-    regl-splom "^1.0.3"
+    regl-line2d "^3.0.11"
+    regl-scatter2d "^3.0.6"
+    regl-splom "^1.0.4"
     right-now "^1.0.0"
     robust-orientation "^1.1.3"
     sane-topojson "^2.0.0"
@@ -2840,6 +2904,10 @@ polytope-closest-point@^1.0.0:
   dependencies:
     numeric "^1.2.6"
 
+postcss-value-parser@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-3.3.0.tgz#87f38f9f18f774a4ab4c8a232f5c5ce8872a9d15"
+
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -2858,11 +2926,18 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.x, prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@15.x, prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
     fbjs "^0.8.16"
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
+
+prop-types@^15.6.2:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
+  dependencies:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
@@ -2904,10 +2979,6 @@ raf@^3.4.0:
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.0.tgz#a28876881b4bc2ca9117d4138163ddb80f781575"
   dependencies:
     performance-now "^2.1.0"
-
-ramda@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
 
 rat-vec@^1.1.1:
   version "1.1.1"
@@ -2972,9 +3043,9 @@ rc-util@^4.0.4, rc-util@^4.4.0:
     prop-types "^15.5.10"
     shallowequal "^0.2.2"
 
-react-chart-editor@^0.21.1:
-  version "0.21.1"
-  resolved "https://registry.yarnpkg.com/react-chart-editor/-/react-chart-editor-0.21.1.tgz#e90dbafc07ed66439ee92b1c8a729156608a5729"
+react-chart-editor@^0.30.0:
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/react-chart-editor/-/react-chart-editor-0.30.0.tgz#4fe20e133cff21aeaea4f667cc77ae736d7c9a7b"
   dependencies:
     "@plotly/draft-js-export-html" "1.2.0"
     classnames "^2.2.5"
@@ -2982,18 +3053,20 @@ react-chart-editor@^0.21.1:
     draft-js-import-html "^1.2.1"
     draft-js-utils "^1.2.0"
     fast-isnumeric "^1.1.1"
-    immutability-helper "^2.6.4"
-    plotly-icons latest
-    plotly.js-dist "1.39.3"
+    immutability-helper "^2.7.1"
+    plotly-icons "1.2.2"
+    plotly.js "1.41.2"
     prop-types "^15.5.10"
     raf "^3.4.0"
     react-color "^2.13.8"
-    react-colorscales "0.5.7"
-    react-dropzone "^4.2.9"
+    react-colorscales "0.6.1"
+    react-dropzone "^5.0.1"
     react-plotly.js "^2.2.0"
     react-rangeslider "^2.2.0"
-    react-select "^1.2.0"
+    react-resizable-rotatable-draggable "^0.1.8"
+    react-select "^1.3.0"
     react-tabs "^2.2.1"
+    styled-components "^3.3.3"
     tinycolor2 "^1.4.1"
 
 react-color@^2.13.8:
@@ -3006,15 +3079,12 @@ react-color@^2.13.8:
     reactcss "^1.2.0"
     tinycolor2 "^1.4.1"
 
-react-colorscales@0.5.7:
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/react-colorscales/-/react-colorscales-0.5.7.tgz#36e5f4dd22f7a99e8456b749272cd8e563ad6fa9"
+react-colorscales@0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/react-colorscales/-/react-colorscales-0.6.1.tgz#8a33812d257f26918eda4bcad33ede98d049c9dc"
   dependencies:
     chroma-js "^1.3.4"
-    plotly.js "1.39.2"
-    ramda "^0.25.0"
     rc-slider "^8.4.0"
-    react-plotly.js "^2.2.0"
     react-select "^1.2.1"
 
 react-dom@~16.4.0:
@@ -3026,18 +3096,22 @@ react-dom@~16.4.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-dropzone@^4.2.9:
-  version "4.2.9"
-  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-4.2.9.tgz#98156ce4d4cb018f7c5099eeb2eaff6dc21836fd"
+react-dropzone@^5.0.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-5.1.1.tgz#b05613ea22f1ab71aa1f7cf5367df7b19468a2f3"
   dependencies:
-    attr-accept "^1.0.3"
-    prop-types "^15.5.7"
+    attr-accept "^1.1.3"
+    prop-types "^15.6.2"
 
 react-input-autosize@^2.1.2:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.1.tgz#ec428fa15b1592994fb5f9aa15bb1eb6baf420f8"
   dependencies:
     prop-types "^15.5.8"
+
+react-is@^16.3.1:
+  version "16.5.2"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.5.2.tgz#e2a7b7c3f5d48062eb769fcb123505eb928722e3"
 
 react-plotly.js@^2.2.0:
   version "2.2.0"
@@ -3052,15 +3126,11 @@ react-rangeslider@^2.2.0:
     classnames "^2.2.3"
     resize-observer-polyfill "^1.4.2"
 
-react-select@^1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-select/-/react-select-1.2.1.tgz#a2fe58a569eb14dcaa6543816260b97e538120d1"
-  dependencies:
-    classnames "^2.2.4"
-    prop-types "^15.5.8"
-    react-input-autosize "^2.1.2"
+react-resizable-rotatable-draggable@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/react-resizable-rotatable-draggable/-/react-resizable-rotatable-draggable-0.1.8.tgz#c6f08c8a6871a6044952b06877ee7ea506e560d1"
 
-react-select@^1.2.1:
+react-select@^1.2.1, react-select@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/react-select/-/react-select-1.3.0.tgz#1828ad5bf7f3e42a835c7e2d8cb13b5c20714876"
   dependencies:
@@ -3151,9 +3221,9 @@ regl-error2d@^2.0.5:
     to-float32 "^1.0.0"
     update-diff "^1.0.2"
 
-regl-line2d@^3.0.9:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/regl-line2d/-/regl-line2d-3.0.9.tgz#9cbf9d35ac8dee8d220432c67958764a3aece7fd"
+regl-line2d@^3.0.11:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/regl-line2d/-/regl-line2d-3.0.11.tgz#d52e6e48f3658a2d8aaaa1d5eefd316e802bda35"
   dependencies:
     array-bounds "^1.0.0"
     array-normalize "^1.1.3"
@@ -3162,15 +3232,15 @@ regl-line2d@^3.0.9:
     earcut "^2.1.1"
     es6-weak-map "^2.0.2"
     flatten-vertex-data "^1.0.0"
-    glslify "^6.1.0"
+    glslify "^6.3.1"
     object-assign "^4.1.1"
     parse-rect "^1.2.0"
     pick-by-alias "^1.1.0"
     to-float32 "^1.0.0"
 
-regl-scatter2d@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/regl-scatter2d/-/regl-scatter2d-3.0.1.tgz#95139cbe127cde0b355b64913f70dbb50f588335"
+regl-scatter2d@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/regl-scatter2d/-/regl-scatter2d-3.0.6.tgz#ee03d18803b114fd3569115a7bf848fdd44e8d4d"
   dependencies:
     array-range "^1.0.1"
     array-rearrange "^2.2.2"
@@ -3188,29 +3258,9 @@ regl-scatter2d@^3.0.0:
     to-float32 "^1.0.0"
     update-diff "^1.1.0"
 
-regl-scatter2d@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/regl-scatter2d/-/regl-scatter2d-3.0.4.tgz#139743a0077637e1621f313e0b0d312aeca51209"
-  dependencies:
-    array-range "^1.0.1"
-    array-rearrange "^2.2.2"
-    bubleify "^1.0.0"
-    clamp "^1.0.1"
-    color-id "^1.1.0"
-    color-normalize "^1.0.3"
-    flatten-vertex-data "^1.0.0"
-    glslify "^6.1.1"
-    is-iexplorer "^1.0.0"
-    object-assign "^4.1.1"
-    parse-rect "^1.1.0"
-    pick-by-alias "^1.0.0"
-    point-cluster "^3.1.2"
-    to-float32 "^1.0.0"
-    update-diff "^1.1.0"
-
-regl-splom@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/regl-splom/-/regl-splom-1.0.3.tgz#f2623f69cda74895ab37b192f79a42043bb1e93b"
+regl-splom@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/regl-splom/-/regl-splom-1.0.4.tgz#5f2de70faf68e00bdf0c98b2de739ec7e07f25a8"
   dependencies:
     array-bounds "^1.0.1"
     array-range "^1.0.1"
@@ -3223,9 +3273,9 @@ regl-splom@^1.0.3:
     pick-by-alias "^1.2.0"
     point-cluster "^1.0.2"
     raf "^3.4.0"
-    regl-scatter2d "^3.0.0"
+    regl-scatter2d "^3.0.6"
 
-regl@^1.3.6:
+regl@^1.3.6, regl@^1.3.7:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/regl/-/regl-1.3.7.tgz#0742755dead1aa230f08b79b98baea1048a2b80a"
 
@@ -3630,6 +3680,28 @@ strongly-connected-components@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/strongly-connected-components/-/strongly-connected-components-1.0.1.tgz#0920e2b4df67c8eaee96c6b6234fe29e873dba99"
 
+styled-components@^3.3.3:
+  version "3.4.9"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-3.4.9.tgz#519abeb351b37be5b7de6a15ff9e4efeb9d772da"
+  dependencies:
+    buffer "^5.0.3"
+    css-to-react-native "^2.0.3"
+    fbjs "^0.8.16"
+    hoist-non-react-statics "^2.5.0"
+    prop-types "^15.5.4"
+    react-is "^16.3.1"
+    stylis "^3.5.0"
+    stylis-rule-sheet "^0.0.10"
+    supports-color "^3.2.3"
+
+stylis-rule-sheet@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/stylis-rule-sheet/-/stylis-rule-sheet-0.0.10.tgz#44e64a2b076643f4b52e5ff71efc04d8c3c4a430"
+
+stylis@^3.5.0:
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.3.tgz#99fdc46afba6af4deff570825994181a5e6ce546"
+
 supercluster@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/supercluster/-/supercluster-2.3.0.tgz#87ab56081bbea9a1d724df5351ee9e8c3af2f48b"
@@ -3643,6 +3715,12 @@ superscript-text@^1.0.0:
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
+
+supports-color@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
+  dependencies:
+    has-flag "^1.0.0"
 
 supports-color@^5.3.0:
   version "5.4.0"
@@ -3850,6 +3928,10 @@ typedarray@^0.0.6:
 typescript@~2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
+
+ua-parser-js@^0.7.18:
+  version "0.7.18"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.18.tgz#a7bfd92f56edfb117083b69e31d2aa8882d4b1ed"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"

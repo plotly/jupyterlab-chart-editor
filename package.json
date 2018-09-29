@@ -36,7 +36,6 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@jupyterlab/csvviewer": "^0.17.2",
     "@jupyterlab/rendermime-interfaces": "^1.1.2",
     "@phosphor/coreutils": "^1.3.0",
     "@phosphor/widgets": "^1.6.0",
