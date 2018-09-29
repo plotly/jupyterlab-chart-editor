@@ -61,8 +61,10 @@ export class RenderedPlotlyEditor extends Widget
         const handleUpdate = (
           state: PlotlyEditorState | ReadonlyJSONObject
         ) => {
-          const metadata = { [this._mimeType]: state as ReadonlyJSONObject };
-          model.setData({ metadata });
+          const newData = {
+            [this._mimeType]: state as any | PlotlyEditorState
+          };
+          model.setData({ data: newData });
         };
         this._ref = ReactDOM.render(
           <ChartEditor
