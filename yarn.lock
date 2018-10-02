@@ -2774,9 +2774,9 @@ rc-util@^4.0.4, rc-util@^4.4.0:
     prop-types "^15.5.10"
     shallowequal "^0.2.2"
 
-react-chart-editor@^0.31.0:
-  version "0.31.0"
-  resolved "https://registry.yarnpkg.com/react-chart-editor/-/react-chart-editor-0.31.0.tgz#03bc58de94c9e34a7277dd6c5a85559f7669d462"
+react-chart-editor@^0.31.1:
+  version "0.31.1"
+  resolved "https://registry.yarnpkg.com/react-chart-editor/-/react-chart-editor-0.31.1.tgz#500c3c39205b70dfdbc140ffa1c555dbd109eca1"
   dependencies:
     "@plotly/draft-js-export-html" "1.2.0"
     classnames "^2.2.5"

@@ -70,7 +70,7 @@ export default class ChartEditor extends React.Component<
     this.props.handleUpdate({ data, layout, frames });
   };
 
-  handleDirectUpdate = (data: Data, layout: Layout, frames: Frames) => {
+  handleRender = (data: Data, layout: Layout, frames: Frames) => {
     this.props.handleUpdate({ data, layout, frames });
   };
 
@@ -96,7 +96,7 @@ export default class ChartEditor extends React.Component<
           frames={frames}
           plotly={plotly}
           onUpdate={this.handleUpdate}
-          onDirectUpdate={this.handleDirectUpdate}
+          onRender={this.handleRender}
           useResizeHandler
           debug
           advancedTraceTypeSelector
