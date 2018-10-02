@@ -70,31 +70,14 @@ export default class ChartEditor extends React.Component<
     this.props.handleUpdate({ data, layout, frames });
   };
 
+  handleDirectUpdate = (data: Data, layout: Layout, frames: Frames) => {
+    this.props.handleUpdate({ data, layout, frames });
+  };
+
   handleResize = () => {
     if (this.ref.state.graphDiv instanceof HTMLElement)
       this.props.plotly.Plots.resize(this.ref.state.graphDiv);
   };
-
-  componentDidMount() {
-    let that = this;
-    setTimeout(function() {
-      that.ref.state.graphDiv.on('plotly_relayout', function() {
-        that.handleUpdate(
-          that.state.data,
-          that.state.layout,
-          that.state.frames
-        );
-      });
-
-      that.ref.state.graphDiv.on('plotly_restyle', function() {
-        that.handleUpdate(
-          that.state.data,
-          that.state.layout,
-          that.state.frames
-        );
-      });
-    });
-  }
 
   render() {
     const { plotly } = this.props;
@@ -113,6 +96,7 @@ export default class ChartEditor extends React.Component<
           frames={frames}
           plotly={plotly}
           onUpdate={this.handleUpdate}
+          onDirectUpdate={this.handleDirectUpdate}
           useResizeHandler
           debug
           advancedTraceTypeSelector
