@@ -4,7 +4,7 @@
 
 A JupyterLab extension for creating and editing Plotly charts, based on https://github.com/plotly/react-chart-editor
 
-![](https://user-images.githubusercontent.com/512354/37057677-0055595e-213d-11e8-9f16-b456a9c61388.gif)
+![](notebooks/ChartEditorExample.gif)
 
 ## Prerequisites
 
@@ -19,45 +19,33 @@ jupyter labextension install jupyterlab-chart-editor
 
 ## Usage
 
-To create a chart from a dict:
+Create and display a figure
 
 ```python
-from IPython.display import display
+import plotly.graph_objs as go
+import plotly.io as pio
 
-def PlotlyEditor(data=[]):
-    bundle = {}
-    bundle['application/vnd.plotly-editor.v1+json'] = data
-    display(bundle, raw=True)
-
-data = {
-    'col1': [1, 2, 3],
-    'col2': [4, 3, 2],
-    'col3': [17, 13, 9],
-}
-
-PlotlyEditor(data)
+fig = go.FigureWidget()
+fig.add_scatter(y=[2, 4, 3, 2.5])
+fig
 ```
+![](notebooks/scatter.png)
 
-To create a chart from a pandas DataFrame:
+Write figure to JSON
 
 ```python
-import pandas as pd
-from IPython.display import display
-
-def PlotlyEditor(data=[]):
-    bundle = {}
-    if isinstance(data, pd.DataFrame):
-        bundle['application/vnd.plotly-editor.v1+json'] = data.to_dict(orient="list")
-    else:
-        bundle['application/vnd.plotly-editor.v1+json'] = data
-    display(bundle, raw=True)
-
-cars = pd.read_json('https://raw.githubusercontent.com/vega/vega/master/docs/data/cars.json')
-
-PlotlyEditor(cars)
+pio.write_json(fig, 'scatter.plotly')
 ```
 
-To render a `.plotly` or `.plotly.json` file, simply open it:
+Right-click `scatter.plotly` from the file menu and open with "Plotly Editor". Make some changes to the figure, then use the file menu to save as `scatter-styled.plotly`.
+
+Then import `scatter-styled.plotly` back into plotly.py
+
+```python
+fig_styled = pio.read_json('scatter-styled.plotly', output_type='FigureWidget')
+fig_styled
+```
+![](notebooks/scatter-styled.png)
 
 ## Development
 
