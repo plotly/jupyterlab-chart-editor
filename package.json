@@ -1,8 +1,7 @@
 {
   "name": "jupyterlab-chart-editor",
-  "version": "0.2.0",
-  "description":
-    "A JupyterLab extension for creating and editing Plotly charts",
+  "version": "0.3.0",
+  "description": "A JupyterLab extension for creating and editing Plotly charts",
   "keywords": [
     "jupyter",
     "jupyterlab",
@@ -31,17 +30,15 @@
     "build": "tsc",
     "clean": "rimraf lib",
     "prepack": "npm run clean && npm run build",
-    "prettier":
-      "prettier --write '{README,src/*,style/*}{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
+    "prettier": "prettier --write '{README,src/*,style/*}{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@jupyterlab/csvviewer": "^0.17.2",
     "@jupyterlab/rendermime-interfaces": "^1.1.2",
     "@phosphor/coreutils": "^1.3.0",
     "@phosphor/widgets": "^1.6.0",
     "react": "~16.4.0",
-    "react-chart-editor": "^0.21.1",
+    "react-chart-editor": "^0.31.1",
     "react-dom": "~16.4.0"
   },
   "devDependencies": {

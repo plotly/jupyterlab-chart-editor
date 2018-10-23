@@ -5,8 +5,6 @@ import { Widget } from '@phosphor/widgets';
 
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 
-import { DSVModel } from '@jupyterlab/csvviewer';
-
 import * as React from 'react';
 
 import * as ReactDOM from 'react-dom';
@@ -58,23 +56,19 @@ export class RenderedPlotlyEditor extends Widget
    */
   renderModel(model: IRenderMime.IMimeModel): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      const data = model.data[this._mimeType] as string;
-      const metadata = model.metadata[this._mimeType] as
-        | ReadonlyJSONObject
-        | PlotlyEditorState;
+      const state = model.data[this._mimeType] as any | PlotlyEditorState;
       try {
-        const delimiter = data.substr(0, 250).match(/.+(\t|,)/)[1];
-        const dsvModel = new DSVModel({ data, delimiter });
         const handleUpdate = (
           state: PlotlyEditorState | ReadonlyJSONObject
         ) => {
-          const metadata = { [this._mimeType]: state as ReadonlyJSONObject };
-          model.setData({ metadata });
+          const newData = {
+            [this._mimeType]: state as any | PlotlyEditorState
+          };
+          model.setData({ data: newData });
         };
         this._ref = ReactDOM.render(
           <ChartEditor
-            model={dsvModel}
-            state={metadata as PlotlyEditorState}
+            state={state}
             handleUpdate={handleUpdate}
             plotly={Plotly}
           />,
@@ -114,7 +108,7 @@ export class RenderedPlotlyEditor extends Widget
  */
 export const rendererFactory: IRenderMime.IRendererFactory = {
   safe: true,
-  mimeTypes: [MIME_TYPE, 'text/csv', 'text/tsv'],
+  mimeTypes: [MIME_TYPE],
   createRenderer: options => new RenderedPlotlyEditor(options)
 };
 
@@ -124,32 +118,21 @@ const extensions: IRenderMime.IExtension | IRenderMime.IExtension[] | any = [
     name: 'jupyterlab-chart-editor:factory',
     rendererFactory,
     rank: 0,
-    dataType: 'string',
+    dataType: 'json',
     fileTypes: [
-      // {
-      //   name: 'plotlyEditor',
-      //   mimeTypes: [MIME_TYPE],
-      //   extensions: ['.plotly', 'plotly.json'],
-      //   iconClass: CSS_ICON_CLASS
-      // },
       {
-        name: 'csv',
-        mimeTypes: ['text/csv'],
-        extensions: ['.csv'],
-        iconClass: CSS_ICON_CLASS
-      },
-      {
-        name: 'tsv',
-        mimeTypes: ['text/tsv'],
-        extensions: ['.tsv'],
+        name: 'plotlyeditor',
+        mimeTypes: [MIME_TYPE],
+        extensions: ['.plotly', '.plotly.json'],
         iconClass: CSS_ICON_CLASS
       }
     ],
     documentWidgetFactoryOptions: {
       name: 'Plotly Editor',
-      modelName: 'text',
-      primaryFileType: 'csv',
-      fileTypes: ['csv', 'tsv']
+      primaryFileType: 'plotlyeditor',
+      // The 'plotly' type is defined in @jupyterlab/plotly-extension
+      fileTypes: ['plotly', 'plotlyeditor', 'json'],
+      defaultFor: ['plotlyeditor']
     }
   }
 ];
