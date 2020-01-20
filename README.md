@@ -2,14 +2,14 @@
 
 [![Binder](https://beta.mybinder.org/badge.svg)](https://mybinder.org/v2/gh/plotly/jupyterlab-chart-editor/master?urlpath=lab/tree/notebooks)
 
-A JupyterLab extension for creating and editing Plotly charts, based on https://github.com/plotly/react-chart-editor
+A JupyterLab extension for editing Plotly charts, based on https://github.com/plotly/react-chart-editor
 
 ![](notebooks/ChartEditorExample.gif)
 
 ## Prerequisites
 
-* JupyterLab >= 0.34
-* plotly.py >= 3.3.0
+* JupyterLab >= 1.2
+* plotly.py >= 4.4
 
 ## Install
 
@@ -25,9 +25,9 @@ Create and display a figure
 import plotly.graph_objs as go
 import plotly.io as pio
 
-fig = go.FigureWidget()
+fig = go.Figure()
 fig.add_scatter(y=[2, 4, 3, 2.5])
-fig
+fig.show()
 ```
 ![](notebooks/scatter.png)
 
@@ -42,7 +42,7 @@ Right-click `scatter.plotly` from the file menu and open with "Plotly Editor". M
 Then import `scatter-styled.plotly` back into plotly.py
 
 ```python
-fig_styled = pio.read_json('scatter-styled.plotly', output_type='FigureWidget')
+fig_styled = pio.read_json('scatter-styled.plotly')
 fig_styled
 ```
 ![](notebooks/scatter-styled.png)
