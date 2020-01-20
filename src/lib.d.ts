@@ -25,7 +25,7 @@ declare module 'react-chart-editor' {
   export default class PlotlyEditor extends React.Component<any, any> {}
 }
 
-declare module 'plotly.js/dist/plotly' {
+declare module 'plotly.js/dist/plotly.min' {
   var Plotly: any;
 
   export = Plotly;

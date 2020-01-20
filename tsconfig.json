@@ -14,7 +14,7 @@
       "es2015.promise",
       "es2017.object",
       "es2015.collection",
-      "dom"
+      "dom","es2015.symbol", "es2015.symbol.wellknown"
     ],
     "jsx": "react",
     "types": ["node"]

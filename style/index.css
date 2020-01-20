@@ -48,3 +48,8 @@
 .jp-PlotlyIcon {
   background-image: var(--jp-icon-plotly);
 }
+
+.editor_controls .modal {
+  top: 60px !important;
+  height: calc(100vh - 60px) !important;
+}
