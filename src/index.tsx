@@ -1,7 +1,7 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import { Widget } from '@phosphor/widgets';
+import { Widget } from '@lumino/widgets';
 
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 
@@ -11,7 +11,7 @@ import * as ReactDOM from 'react-dom';
 
 import * as Plotly from 'plotly.js/dist/plotly.min';
 
-import { ReadonlyJSONObject } from '@phosphor/coreutils';
+import { ReadonlyJSONObject } from '@lumino/coreutils';
 
 import ChartEditor, { PlotlyEditorState } from './component';
 
@@ -66,7 +66,7 @@ export class RenderedPlotlyEditor extends Widget
           };
           model.setData({ data: newData });
         };
-        this._ref = ReactDOM.render(
+        this._ref = (ReactDOM.render(
           <ChartEditor
             state={state}
             handleUpdate={handleUpdate}
@@ -76,7 +76,7 @@ export class RenderedPlotlyEditor extends Widget
           () => {
             resolve(undefined);
           }
-        ) as ChartEditor;
+        ) as unknown) as ChartEditor;
       } catch (error) {
         reject(error);
       }
