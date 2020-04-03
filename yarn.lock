@@ -434,10 +434,10 @@
   dependencies:
     "@turf/helpers" "6.x"
 
-"@types/node@12":
-  version "12.12.32"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.32.tgz#0ccc836d273e8a3cddf568daf22729cfa57c1925"
-  integrity sha512-44/reuCrwiQEsXud3I5X3sqI5jIXAmHB5xoiyKUw965olNHF3IWKjBLKK3F9LOSUZmK+oDt8jmyO637iX+hMgA==
+"@types/node@^12":
+  version "12.12.34"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.34.tgz#0a5d6ae5d22612f0cf5f10320e1fc5d2a745dcb8"
+  integrity sha512-BneGN0J9ke24lBRn44hVHNeDlrXRYF+VRp0HbSUNnEZahXGAysHZIqnf/hER6aabdBgzM4YOV4jrR8gj4Zfi0g==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -1245,12 +1245,12 @@ d3-force@^1.0.6:
     d3-quadtree "1"
     d3-timer "1"
 
-d3-hierarchy@^1.1.8:
+d3-hierarchy@^1.1.9:
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/d3-hierarchy/-/d3-hierarchy-1.1.9.tgz#2f6bee24caaea43f8dc37545fa01628559647a83"
   integrity sha512-j8tPxlqh1srJHAtxfvOUwKNYJkQuBFdM1+JAUfq6xqH5eAqf93L7oG1NVqDa4CpFZNvnNKtCYEUC8KY9yEn9lQ==
 
-d3-interpolate@1:
+d3-interpolate@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/d3-interpolate/-/d3-interpolate-1.4.0.tgz#526e79e2d80daa383f9e0c1c1c7dcc0f0583e987"
   integrity sha512-V9znK0zc3jOPV4VD2zZn0sDhZU3WAE2bmlxdIwwQPPzPjvyLkd8B3JUVdS1IDUFDkWZ72c9qnv1GK2ZagTZ8EA==
@@ -1395,7 +1395,7 @@ draft-js-utils@^1.2.0, draft-js-utils@^1.3.3, draft-js-utils@^1.4.0:
   resolved "https://registry.yarnpkg.com/draft-js-utils/-/draft-js-utils-1.4.0.tgz#c60af198108f69b0f1df3572555b23836819d1cf"
   integrity sha512-8s9FFuKC+lOWGwJ0b3om2PF+uXrqQPaEQlPJI7UxdzxTYGMeKouMPA9+YlPn52zcAVElIZtd2tXj6eQmvlKelw==
 
-draft-js@^0.11.0:
+draft-js@^0.11.5:
   version "0.11.5"
   resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.11.5.tgz#b5dd30c30c9316801ab9766d45a8f88b1cd43b2c"
   integrity sha512-RlHcoDtblwCD6Bw2ay3D0dTLA6lH8862OcdJrHGnYrY5JjlitzSzGvGQwqqumVvbGUNDSZLD3FyNpSs4z5WIUg==
@@ -1915,7 +1915,7 @@ gl-heatmap2d@^1.0.5:
     iota-array "^1.0.0"
     typedarray-pool "^1.1.0"
 
-gl-line3d@^1.1.11:
+gl-line3d@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/gl-line3d/-/gl-line3d-1.2.0.tgz#038d339b8986e602af90dd9663f83678db64247c"
   integrity sha512-du9GDF87DMfllND2pBjySyHhFaza9upw4t2GMoXn11/I38atO6+saiznuhKmfxuDnyxGdmmZF6/HPauk0owKDA==
@@ -1958,7 +1958,7 @@ gl-matrix@^3.0.0:
   resolved "https://registry.yarnpkg.com/gl-matrix/-/gl-matrix-3.2.1.tgz#2d8e35125bf854f49abded8a0c8350b1a4907a26"
   integrity sha512-YYVO8jUSf6+SakL4AJmx9Jc7zAZhkJQ+WhdtX3VQe5PJdCOX6/ybY4x1vk+h94ePnjRn6uml68+QxTAJneUpvA==
 
-gl-mesh3d@^2.2.0:
+gl-mesh3d@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/gl-mesh3d/-/gl-mesh3d-2.3.0.tgz#6c69a312eeed37b01716732bec0fb15300871fdb"
   integrity sha512-iKx3v0xB/6Kej+GpMHhxzW6ziqiIjp6WOyAbuXvBRN9P5iIgzifgBYnDd1mYmCLWGmf85MCki/FvD223BOYFxg==
@@ -1979,7 +1979,7 @@ gl-mesh3d@^2.2.0:
     simplicial-complex-contour "^1.0.0"
     typedarray-pool "^1.1.0"
 
-gl-plot2d@^1.4.2:
+gl-plot2d@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/gl-plot2d/-/gl-plot2d-1.4.3.tgz#344354df70272fa7a6a134bca3d1fb67a5d6d418"
   integrity sha512-Ei6WC/SzQ7/qld8MMv7sWrFSdkq8/n7Xmdvj7sbwUkgsJirfknKfeq4DCwaMn9vD2rHOLmdT0NMW+HPrLKSeWQ==
@@ -1992,7 +1992,7 @@ gl-plot2d@^1.4.2:
     glslify "^7.0.0"
     text-cache "^4.2.1"
 
-gl-plot3d@^2.3.0:
+gl-plot3d@^2.4.4:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/gl-plot3d/-/gl-plot3d-2.4.4.tgz#5fb8f60ae36ac55036af5566efc29c9adbe06a30"
   integrity sha512-R/V4hSrE2sFD+Xls7D6qCOlWCRmqtUff0sKbeFJdI91HfFzPJPiy9Pqa/Jh2UsvdmwkkSQPNDcBvLd6TvhRC/g==
@@ -2111,7 +2111,7 @@ gl-streamtube3d@^1.4.0:
     glsl-specular-cook-torrance "^2.0.1"
     glslify "^7.0.0"
 
-gl-surface3d@^1.4.6:
+gl-surface3d@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/gl-surface3d/-/gl-surface3d-1.5.1.tgz#a0a3c9e2573b1487e6a5253774f56708312a04db"
   integrity sha512-wE9tMHlAL5ZBluXpdVwxhBiPv7J9HwEBc5tVHFDP6TJkvhvf2RTDkCPDOPP5wCSLAFATImbzgwgoNM30/ghDTw==
@@ -2444,10 +2444,10 @@ image-palette@^2.1.0:
     pxls "^2.0.0"
     quantize "^1.0.2"
 
-immutability-helper@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-3.0.1.tgz#4f609c5afbf8d78cb297970e8af2fba8b0eda1d6"
-  integrity sha512-U92ROQQt7XkIwrdqCByUI118TQM1hXdKnRQpvKeA0HRyGSnJipu9IWHe4UD8zCN00O8UnQjQzPCgZ1CC3yBzHA==
+immutability-helper@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-3.0.2.tgz#e9187158b47c93368a92e84c31714c4b3dff30b0"
+  integrity sha512-fcrJ26wpvUcuGRpoGY4hyQ/JOeR1HAunMmE3C0XYXSe6plAGtgTlB2S4BzueBANCPrDJ7AByL1yrIRLIlVfwpA==
   dependencies:
     invariant "^2.2.4"
 
@@ -3256,10 +3256,10 @@ plotly-icons@1.3.14:
     mdi-react "5.2.0"
     prop-types "^15.6.1"
 
-plotly.js@1.52.1:
-  version "1.52.1"
-  resolved "https://registry.yarnpkg.com/plotly.js/-/plotly.js-1.52.1.tgz#1f80b8fb559c542fd40741c9aee6555f41245f6f"
-  integrity sha512-GLNwAu20zwRZrfjrSRUZHXyDulDRh1yfPBV5SLqy5AdGefb6CK2QCBbMcGlhV2P14oJwQ8vd1wqTZVZE9xQ9Rw==
+plotly.js@1.53.0:
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/plotly.js/-/plotly.js-1.53.0.tgz#6fe67d76051dc7c7be905b72eda5956817f0d740"
+  integrity sha512-pNZNdwJs9Qdm/gti9blVA9Io4OfDktatT4k7yBDT+oH/JDbDu9p4/M/15o83qla+ecZx2d5rwOEt9vuytBMhFA==
   dependencies:
     "@plotly/d3-sankey" "0.7.2"
     "@plotly/d3-sankey-circular" "0.33.1"
@@ -3274,8 +3274,8 @@ plotly.js@1.52.1:
     country-regex "^1.1.0"
     d3 "^3.5.12"
     d3-force "^1.0.6"
-    d3-hierarchy "^1.1.8"
-    d3-interpolate "1"
+    d3-hierarchy "^1.1.9"
+    d3-interpolate "^1.4.0"
     delaunay-triangulate "^1.1.6"
     es6-promise "^3.0.2"
     fast-isnumeric "^1.1.3"
@@ -3283,21 +3283,22 @@ plotly.js@1.52.1:
     gl-contour2d "^1.1.6"
     gl-error3d "^1.0.15"
     gl-heatmap2d "^1.0.5"
-    gl-line3d "^1.1.11"
+    gl-line3d "1.2.0"
     gl-mat4 "^1.2.0"
-    gl-mesh3d "^2.2.0"
-    gl-plot2d "^1.4.2"
-    gl-plot3d "^2.3.0"
+    gl-mesh3d "^2.3.0"
+    gl-plot2d "^1.4.3"
+    gl-plot3d "^2.4.4"
     gl-pointcloud2d "^1.0.2"
     gl-scatter3d "^1.2.2"
     gl-select-box "^1.0.3"
     gl-spikes2d "^1.0.2"
     gl-streamtube3d "^1.4.0"
-    gl-surface3d "^1.4.6"
+    gl-surface3d "^1.5.1"
     gl-text "^1.1.8"
     glslify "^7.0.0"
     has-hover "^1.0.1"
     has-passive-events "^1.0.0"
+    is-mobile "^2.2.0"
     mapbox-gl "1.3.2"
     matrix-camera-controller "^2.1.3"
     mouse-change "^1.4.0"
@@ -3532,35 +3533,35 @@ rc-util@^4.0.4, rc-util@^4.15.3, rc-util@^4.4.0:
     react-lifecycles-compat "^3.0.4"
     shallowequal "^1.1.0"
 
-react-chart-editor@^0.41.0:
-  version "0.41.0"
-  resolved "https://registry.yarnpkg.com/react-chart-editor/-/react-chart-editor-0.41.0.tgz#cfb5c8e90cf665fce55752534674dd6432ca9e67"
-  integrity sha512-2E8Zz7Z2+HSUfbTlXpNI/MvGS+4ZIgYpJXKvISj8nFHlL/slw/6imZyECCUGTMUkbTAXTh9Xeh734k7OPinO4g==
+react-chart-editor@^0.41.1:
+  version "0.41.1"
+  resolved "https://registry.yarnpkg.com/react-chart-editor/-/react-chart-editor-0.41.1.tgz#a9e433eac38921d905676269f9e507b335e53f81"
+  integrity sha512-TwIhQ8QFenSyBLQ6zAviOnPbID3hAybOaCQa9QuIlwgUOdEzoO2GqNgSsQ5iC16E6LJHgUxnznTXFADzqCAggQ==
   dependencies:
     "@plotly/draft-js-export-html" "1.2.0"
     classnames "^2.2.6"
-    draft-js "^0.11.0"
+    draft-js "^0.11.5"
     draft-js-import-html "^1.3.3"
     draft-js-utils "^1.3.3"
     fast-isnumeric "^1.1.2"
-    immutability-helper "^3.0.0"
+    immutability-helper "^3.0.2"
     plotly-icons "1.3.14"
-    plotly.js "1.52.1"
+    plotly.js "1.53.0"
     prop-types "^15.7.2"
     raf "^3.4.1"
-    react-color "^2.17.0"
+    react-color "^2.18.0"
     react-colorscales "0.7.3"
     react-day-picker "^7.4.0"
-    react-dropzone "^10.1.10"
+    react-dropzone "^10.2.2"
     react-plotly.js "^2.4.0"
     react-rangeslider "^2.2.0"
     react-resizable-rotatable-draggable "^0.2.0"
     react-select "^2.4.2"
     react-tabs "^3.0.0"
-    styled-components "^5.0.0"
+    styled-components "^5.0.1"
     tinycolor2 "^1.4.1"
 
-react-color@^2.17.0:
+react-color@^2.18.0:
   version "2.18.0"
   resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.18.0.tgz#34956f0bac394f6c3bc01692fd695644cc775ffd"
   integrity sha512-FyVeU1kQiSokWc8NPz22azl1ezLpJdUyTbWL0LPUpcuuYDrZ/Y1veOk9rRK5B3pMlyDGvTk4f4KJhlkIQNRjEA==
@@ -3598,7 +3599,7 @@ react-dom@~16.9.0:
     prop-types "^15.6.2"
     scheduler "^0.15.0"
 
-react-dropzone@^10.1.10:
+react-dropzone@^10.2.2:
   version "10.2.2"
   resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-10.2.2.tgz#67b4db7459589a42c3b891a82eaf9ade7650b815"
   integrity sha512-U5EKckXVt6IrEyhMMsgmHQiWTGLudhajPPG77KFSvgsMqNEHSyGpqWvOMc5+DhEah/vH4E1n+J5weBNLd5VtyA==
@@ -4301,7 +4302,7 @@ strongly-connected-components@^1.0.1:
   resolved "https://registry.yarnpkg.com/strongly-connected-components/-/strongly-connected-components-1.0.1.tgz#0920e2b4df67c8eaee96c6b6234fe29e873dba99"
   integrity sha1-CSDitN9nyOrulsa2I0/inoc9upk=
 
-styled-components@^5.0.0:
+styled-components@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-5.0.1.tgz#57782a6471031abefb2db5820a1876ae853bc619"
   integrity sha512-E0xKTRIjTs4DyvC1MHu/EcCXIj6+ENCP8hP01koyoADF++WdBUOrSGwU1scJRw7/YaYOhDvvoad6VlMG+0j53A==
