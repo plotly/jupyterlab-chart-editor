@@ -1,0 +1,3 @@
+tasks:
+  - init: yarn install && yarn run build && pip install -r ./requirements.txt
+    command: yarn run watch
